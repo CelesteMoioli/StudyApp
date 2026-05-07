@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertController, IonButton} from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -8,6 +9,38 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor(
+    private alertController: AlertController
+  ) {}
+
+async MostrarConsola()  {
+  let alerta = await this.alertController.create({
+    header: "Ingresar texto",
+    inputs: [
+      {
+        type: "text",
+        name: "titulo",
+        placeholder: "Ingresar texto deseado",
+
+      }
+      
+    ],
+    buttons: [
+      {
+        text: "Cancelar",
+        role: "cancel"
+      },
+      {
+        text: "Imprimir",
+        handler: (data) => {
+          console.log(data.titulo);
+        }
+      }
+    ]
+  })
+
+  await alerta.present();
+
+}
 
 }
