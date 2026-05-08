@@ -1,17 +1,106 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Segundo Tab
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <!-- Subtítulo -->
+   <h2 class="title">Agenda Academica</h2>
+  <p class="subtitle">
+    Tus fechas importantes y tareas.
+  </p>
+
+  <!-- Selector de mes -->
+  <div class="month-selector">
+    <ion-button fill="clear" size="small">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <h3 class="mes">Mayo 2026</h3>
+
+    <ion-button fill="clear" size="small">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Calendario horizontal -->
+  <div class="calendar-row">
+    <div class="day inactive">
+      <span class="day-name">LUN</span>
+      <span class="day-name">20</span>
+    </div>
+
+    <div class="day inactive">
+      <span class="day-name">MAR</span>
+      <span class="day-name">21</span>
+    </div>
+
+    <div class="day active">
+      <span class="day-name">MIÉ</span>
+      <span class="day-name">22</span>
+    </div>
+
+    <div class="day inactive">
+      <span class="day-name">JUE</span>
+      <span class="day-name">23</span>
+    </div>
+
+    <div class="day inactive">
+      <span class="day-name">VIE</span>
+      <span class="day-name">24</span>
+    </div>
+
+    <div class="day inactive">
+      <span class="day-name">SÁB</span>
+      <span class="day-name">25</span>
+    </div>
+
+    <div class="day inactive">
+      <span class="day-name">DOM</span>
+      <span class="day-name">26</span>
+    </div>
+  </div>
+
+  <!-- Lista de eventos -->
+
+  <div class="event-card purple">
+    <div class="event-header">
+      <span class="event-type purplefont">Entrega</span>
+      <span class="event-time">23:59</span>
+    </div>
+    <h4>Tarea: Derivadas</h4>
+    <p>Matemáticas</p>
+  </div>
+
+  <div class="event-card green">
+    <div class="event-header">
+      <span class="event-type greenfont">Examen</span>
+      <span class="event-time">10:00</span>
+    </div>
+    <h4>Examen Parcial</h4>
+    <p>Física</p>
+  </div>
+
+  <div class="event-card orange">
+    <div class="event-header">
+      <span class="event-type orangefont">Proyecto</span>
+      <span class="event-time">23:59</span>
+    </div>
+    <h4>Entrega: Prototipo</h4>
+    <p>Programación</p>
+  </div>
+
+  <div class="event-card blue">
+    <div class="event-header">
+      <span class="event-type bluefont">Reunión</span>
+      <span class="event-time">16:00</span>
+    </div>
+    <h4>Reunión de equipo Alfa</h4>
+    <p>Matemáticas</p>
+  </div>
+
+  <!-- FAB -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

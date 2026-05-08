@@ -1,17 +1,116 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tercer Tab
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Subtítulo -->
+   <h2 class="title">Repositorio de recursos</h2>
+  <p class="subtitle">
+    Encuentra y comparte materiales útiles para estudiar.
+  </p>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <!-- Buscador -->
+  <div class="search-container">
+    <ion-searchbar class="searchbar"
+      placeholder="Buscar recursos..."
+      show-clear-button="focus">
+    </ion-searchbar>
+
+    <ion-button fill="clear">
+      <ion-icon name="options-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-chips">
+    <div class="filter-chip active" >
+      <p>Todos</p>
+    </div>
+
+    <div class="filter-chip">
+      <p>Documentos</p>
+    </div>
+
+    <div class="filter-chip" >
+      <p>Presentaciones</p>
+    </div>
+
+    <div class="filter-chip" >
+      <p>Videos</p>
+    </div>
+  </div>
+
+  <!-- Recientes -->
+  <div class="section-header">
+    <h3>Recientes</h3>
+
+    <button class="seeall-btn">
+      <p>Ver todos</p>
+    </button>
+  </div>
+
+  <!-- Lista de archivos -->
+
+  <ion-list lines="none">
+
+    <!-- PDF -->
+    <ion-item class="file-item" button>
+      <div slot="start" class="file-icon pdf">PDF</div>
+
+      <ion-label>
+        <h4>Formulario integrales.pdf</h4>
+        <p>Matemáticas</p>
+        <p class="file-meta">PDF · Subido ayer</p>
+      </ion-label>
+
+      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
+    </ion-item>
+
+    <!-- PPT -->
+    <ion-item class="file-item" button>
+      <div slot="start" class="file-icon ppt">PPT</div>
+
+      <ion-label>
+        <h4>Presentación Ondas.pptx</h4>
+        <p>Física</p>
+        <p class="file-meta">PPTX · Subido hace 2 días</p>
+      </ion-label>
+
+      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
+    </ion-item>
+
+    <!-- DOC -->
+    <ion-item class="file-item" button>
+      <div slot="start" class="file-icon doc">DOC</div>
+
+      <ion-label>
+        <h4>Guía de Algoritmos.docx</h4>
+        <p>Programación</p>
+        <p class="file-meta">DOCX · Subido hace 3 días</p>
+      </ion-label>
+
+      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
+    </ion-item>
+
+    <!-- VIDEO -->
+    <ion-item class="file-item" button>
+      <div slot="start" class="file-icon video">
+        <ion-icon name="play"></ion-icon>
+      </div>
+
+      <ion-label>
+        <h4>Clase 5 - Cinemática.mp4</h4>
+        <p>Física</p>
+        <p class="file-meta">MP4 · Subido hace 4 días</p>
+      </ion-label>
+
+      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- FAB -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

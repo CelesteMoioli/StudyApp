@@ -1,14 +1,20 @@
 .ion-header{
     background-color: #1ac7c7;
     color: #12135D;
+    font-weight: 900;
 }
 
 .ion-header span{
     color: #8658c7;
+    font-weight: 700;
 }
 
 .header-section {
   margin-bottom: 20px;
+}
+
+.header-section h2 {
+  font-weight: 700;
 }
 
 .subtitle {
@@ -23,6 +29,7 @@
   display: flex;
   width: max-content;
   --border-radius: 10px;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .room-item {
@@ -31,6 +38,7 @@
   padding: 1px;
   border: .5px solid #b6b6b6;
   border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .lista{
