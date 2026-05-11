@@ -184,3 +184,44 @@ ion-fab-button {
   --background: #1a73e8;
   --background-activated: #1557b0;
 }
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.calendar-nav .calendar-row {
+  margin-bottom: 0;
+  gap: 4px;
+}
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.calendar-nav .calendar-row {
+  margin-bottom: 0;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+}
+
+.week-arrow {
+  background: transparent;
+  border: none;
+  color: #1a73e8;
+  font-size: 22px;
+  font-weight: 300;
+  cursor: pointer;
+  padding: 0 2px;
+  opacity: 0.6;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.week-arrow:active {
+  opacity: 1;
+}

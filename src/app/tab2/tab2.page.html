@@ -14,18 +14,22 @@
     </ion-button>
   </div>
 
-  <!-- Calendario horizontal -->
-  <div class="calendar-row">
-    <div
-      *ngFor="let dia of diasSemana"
-      class="day"
-      [class.active]="esDiaSeleccionado(dia)"
-      [class.inactive]="!esDiaSeleccionado(dia)"
-      (click)="seleccionarDia(dia)">
-      <span class="day-name">{{ nombresDias[dia.getDay()] }}</span>
-      <span class="day-name">{{ dia.getDate() }}</span>
-      <span class="dot" *ngIf="tieneEventos(dia)">•</span>
+  <!-- Calendario horizontal con navegación de semana -->
+  <div class="calendar-nav">
+    <button class="week-arrow" (click)="semanaAnterior()">‹</button>
+    <div class="calendar-row">
+      <div
+        *ngFor="let dia of diasSemana"
+        class="day"
+        [class.active]="esDiaSeleccionado(dia)"
+        [class.inactive]="!esDiaSeleccionado(dia)"
+        (click)="seleccionarDia(dia)">
+        <span class="day-name">{{ nombresDias[dia.getDay()] }}</span>
+        <span class="day-name">{{ dia.getDate() }}</span>
+        <span class="dot" *ngIf="tieneEventos(dia)">•</span>
+      </div>
     </div>
+    <button class="week-arrow" (click)="semanaSiguiente()">›</button>
   </div>
 
   <!-- Invitaciones pendientes -->
@@ -55,7 +59,7 @@
     Eventos del día
   </h4>
 
-  <div *ngFor="let evento of eventosDia"
+  <div *ngFor="let evento de eventosDia"
     class="event-card"
     [ngClass]="colorTipo(evento.tipo)">
     <div class="event-header">

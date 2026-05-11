@@ -42,21 +42,37 @@ export class Tab2Page implements OnInit {
     }
   }
 
-  mesAnterior() {
-    this.mesActual = new Date(this.mesActual.getFullYear(), this.mesActual.getMonth() - 1, 1);
-    const nuevaFecha = new Date(this.mesActual.getFullYear(), this.mesActual.getMonth(), 1);
-    this.diaSeleccionado = nuevaFecha;
-    this.generarSemana(nuevaFecha);
-    this.filtrarEventosDia();
-  }
+mesAnterior() {
+  this.mesActual = new Date(this.mesActual.getFullYear(), this.mesActual.getMonth() - 1, 1);
+  this.diaSeleccionado = new Date(this.mesActual);
+  this.generarSemana(this.diaSeleccionado);
+  this.filtrarEventosDia();
+}
 
-  mesSiguiente() {
-    this.mesActual = new Date(this.mesActual.getFullYear(), this.mesActual.getMonth() + 1, 1);
-    const nuevaFecha = new Date(this.mesActual.getFullYear(), this.mesActual.getMonth(), 1);
-    this.diaSeleccionado = nuevaFecha;
-    this.generarSemana(nuevaFecha);
-    this.filtrarEventosDia();
-  }
+mesSiguiente() {
+  this.mesActual = new Date(this.mesActual.getFullYear(), this.mesActual.getMonth() + 1, 1);
+  this.diaSeleccionado = new Date(this.mesActual);
+  this.generarSemana(this.diaSeleccionado);
+  this.filtrarEventosDia();
+}
+
+semanaAnterior() {
+  const nueva = new Date(this.diaSeleccionado);
+  nueva.setDate(nueva.getDate() - 7);
+  this.diaSeleccionado = nueva;
+  this.mesActual = new Date(nueva.getFullYear(), nueva.getMonth(), 1);
+  this.generarSemana(nueva);
+  this.filtrarEventosDia();
+}
+
+semanaSiguiente() {
+  const nueva = new Date(this.diaSeleccionado);
+  nueva.setDate(nueva.getDate() + 7);
+  this.diaSeleccionado = nueva;
+  this.mesActual = new Date(nueva.getFullYear(), nueva.getMonth(), 1);
+  this.generarSemana(nueva);
+  this.filtrarEventosDia();
+}
 
   seleccionarDia(dia: Date) {
     this.diaSeleccionado = dia;
