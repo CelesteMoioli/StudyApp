@@ -53,3 +53,6 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+// Polyfill para amazon-cognito-identity-js: la librería espera `global` (Node.js), pero en el browser no existe.
+(window as any).global = window;

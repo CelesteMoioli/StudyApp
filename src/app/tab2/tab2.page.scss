@@ -28,49 +28,46 @@
 
 .calendar-row {
   display: flex;
-    justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
-    width: 100%;
-    gap: .5em;
-
+  width: 100%;
 }
 
 .day {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 13px;
-  color: var(--ion-color-medium);
+  justify-content: center;
+  width: 40px;
+  height: 56px;
+  border-radius: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-.day span{
+.day span {
   padding: 0;
   margin: 0;
 }
 
 .day-name {
   font-size: 12px;
-
 }
 
 .day.inactive {
-  background: white;
   color: var(--ion-color-medium);
-  padding: 10px 8px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+.day.today {
+  color: #7b5cf1;
+  font-weight: 700;
+  border: 1px solid #7b5cf1;
 }
 
 .day.active {
   background: #7b5cf1;
   color: white;
-   padding: 8px 14px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .event-card {

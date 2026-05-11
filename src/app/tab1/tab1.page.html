@@ -1,7 +1,6 @@
-<ion-header [translucent]="true" >
+<ion-header [translucent]="true">
   <ion-toolbar class="ion-header">
-    <ion-title>Study <span>App</span>  </ion-title>
-
+    <ion-title>Study <span>App</span></ion-title>
     <ion-buttons slot="end">
       <ion-button>
         <ion-icon name="notifications-outline"></ion-icon>
@@ -12,82 +11,36 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <!-- Título sección -->
   <div class="header-section">
     <h2>Salas por materia</h2>
-    <p class="subtitle">
-      Tus espacios de estudio organizados por materia.
-    </p>
+    <p class="subtitle">Tus espacios de estudio organizados por materia.</p>
 
-    <ion-button expand="block" shape="round" class="new-room-btn">
+    <ion-button expand="block" shape="round" class="new-room-btn" (click)="nuevaSala()">
       <ion-icon name="add" slot="start"></ion-icon>
       Nueva sala
     </ion-button>
   </div>
 
-  <!-- Lista de materias -->
   <ion-list class="lista" lines="none">
-
-    <!-- Matemáticas -->
-    <ion-item class="room-item" button>
-      <ion-avatar slot="start" class="avatar-purple">
-        <ion-icon class="room-item-icon" name="calculator-outline"></ion-icon>
+    <ion-item class="room-item" button *ngFor="let sala of salas; let i = index" (click)="abrirSala(sala)">
+      <ion-avatar slot="start" [class]="getColor(i)">
+        <ion-icon class="room-item-icon" [name]="getIcon(i)"></ion-icon>
       </ion-avatar>
 
       <ion-label class="room-label">
-        <h3>Matemáticas</h3>
-        <p>12 miembros</p>
-        <p class="activity">Última actividad: hoy</p>
+        <h3>{{ sala.nombre }}</h3>
+        <p>{{ sala.descripcion }}</p>
+        <p class="activity">Creada: {{ sala.fechaCreacion }}</p>
       </ion-label>
 
       <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
     </ion-item>
 
-    <!-- Física -->
-    <ion-item class="room-item" button>
-      <ion-avatar slot="start" class="avatar-indigo">
-        <ion-icon class="room-item-icon" name="flask-outline"></ion-icon>
-      </ion-avatar>
-
-      <ion-label class="room-label">
-        <h3>Física</h3>
-        <p>9 miembros</p>
-        <p class="activity">Última actividad: ayer</p>
+    <ion-item *ngIf="salas.length === 0" lines="none">
+      <ion-label class="ion-text-center" color="medium">
+        <p>No hay salas todavía. ¡Creá la primera!</p>
       </ion-label>
-
-      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
     </ion-item>
-
-    <!-- Programación -->
-    <ion-item class="room-item" button>
-      <ion-avatar slot="start" class="avatar-green">
-        <ion-icon class="room-item-icon" name="code-slash-outline"></ion-icon>
-      </ion-avatar>
-
-      <ion-label class="room-label">
-        <h3>Programación</h3>
-        <p>15 miembros</p>
-        <p class="activity">Última actividad: hoy</p>
-      </ion-label>
-
-      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
-    </ion-item>
-
-    <!-- Historia -->
-    <ion-item class="room-item" button>
-      <ion-avatar slot="start" class="avatar-orange">
-        <ion-icon class="room-item-icon" name="receipt-outline"></ion-icon>
-      </ion-avatar>
-
-      <ion-label class="room-label">
-        <h3>Historia</h3>
-        <p>8 miembros</p>
-        <p class="activity">Última actividad: hace 2 días</p>
-      </ion-label>
-
-      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
-    </ion-item>
-
   </ion-list>
 
 </ion-content>

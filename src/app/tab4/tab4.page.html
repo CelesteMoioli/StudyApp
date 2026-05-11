@@ -1,107 +1,191 @@
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Wiki</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <!-- Subtítulo -->
-  <h2 class="title">Wiki colaborativa</h2>
-  <p class="subtitle">
-    Crea, edita y organiza el conocimiento.
-  </p>
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="handleReaderScroll($event)">
+  <main class="page" *ngIf="!selectedArticle">
+    <!-- Encabezado simple: esta seccion funciona como buscador de Wikipedia dentro de StudyApp. -->
+    <section class="intro">
+      <h1>Buscar en Wikipedia</h1>
+      <p>Busca un tema, abrilo en StudyApp y segui leyendo donde quedaste.</p>
+    </section>
 
-  <!-- Buscador + Botón -->
-  <div class="search-container">
-    <ion-searchbar
-      placeholder="Buscar en la wiki..."
-      show-clear-button="focus">
-    </ion-searchbar>
+    <!-- Formulario que consulta la API publica de Wikipedia en espanol. -->
+    <form class="search-row" (ngSubmit)="searchWikipedia()">
+      <ion-item lines="none">
+        <ion-icon name="search-outline" slot="start"></ion-icon>
+        <ion-input
+          name="searchTerm"
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar tema en Wikipedia"
+          enterkeyhint="search">
+        </ion-input>
+        <ion-spinner *ngIf="isLoading" name="crescent" slot="end"></ion-spinner>
+      </ion-item>
+    </form>
 
-    
-  </div>
+    <section class="quick-library">
+      <button type="button" (click)="toggleLibrary('recent')" [class.active]="expandedLibrary === 'recent'">
+        <span class="quick-icon recent-icon">
+          <ion-icon name="bookmark-outline"></ion-icon>
+        </span>
+        <span>Seguir</span>
+      </button>
+      <button type="button" (click)="toggleLibrary('favorites')" [class.active]="expandedLibrary === 'favorites'">
+        <span class="quick-icon favorite-icon">
+          <ion-icon name="star-outline"></ion-icon>
+        </span>
+        <span>Favoritos</span>
+      </button>
+      <button type="button" (click)="toggleLibrary('shared')" [class.active]="expandedLibrary === 'shared'">
+        <span class="quick-icon shared-icon">
+          <ion-icon name="share-social-outline"></ion-icon>
+        </span>
+        <span>Compartidos</span>
+      </button>
+    </section>
 
-  <ion-button expand="block" shape="round" class="new-page-btn">
-      <ion-icon name="add" slot="start"></ion-icon>
-      <p>Nueva página</p>
-    </ion-button>
+    <!-- Lecturas recientes guardadas en LocalStorage para retomar sin volver a buscar. -->
+    <section class="library-panel" *ngIf="expandedLibrary === 'recent'">
+      <h2>Segui leyendo</h2>
+      <ng-container *ngIf="recentTitles.length > 0; else emptyRecent">
+        <button class="result-item" type="button" *ngFor="let title of recentTitles" (click)="openArticle(title)">
+          <div>
+            <h3>{{ title }}</h3>
+            <p>Retomar desde {{ getSavedProgress(title) }}%</p>
+          </div>
+          <ion-icon name="bookmark-outline"></ion-icon>
+        </button>
+      </ng-container>
+      <ng-template #emptyRecent>
+        <p class="empty-state">Todavia no tenes lecturas para retomar.</p>
+      </ng-template>
+    </section>
 
-  <!-- Páginas destacadas -->
-  <h2 class="section-title">Páginas destacadas</h2>
+    <!-- Favoritos guardados en LocalStorage para volver rapido a lecturas importantes. -->
+    <section class="library-panel" *ngIf="expandedLibrary === 'favorites'">
+      <h2>Tus favoritos</h2>
+      <ng-container *ngIf="favoriteTitles.length > 0; else emptyFavorites">
+        <button class="result-item" type="button" *ngFor="let title of favoriteTitles" (click)="openArticle(title)">
+          <div>
+            <h3>{{ title }}</h3>
+            <p *ngIf="getSavedProgress(title) > 0">Retomar desde {{ getSavedProgress(title) }}%</p>
+            <p *ngIf="getSavedProgress(title) === 0">Guardado para leer despues</p>
+          </div>
+          <ion-icon name="star"></ion-icon>
+        </button>
+      </ng-container>
+      <ng-template #emptyFavorites>
+        <p class="empty-state">Marca un tema con estrella para guardarlo aca.</p>
+      </ng-template>
+    </section>
 
-  <div class="lista-wikis">
-    <ion-card class="wiki-card ">
-      <ion-card-content class="card-content top">
+    <section class="library-panel" *ngIf="expandedLibrary === 'shared'">
+      <h2>Compartidos</h2>
+      <p class="empty-state">Aca vamos a mostrar los temas compartidos cuando activemos salas.</p>
+    </section>
+
+    <ion-text color="danger" *ngIf="errorMessage">
+      <p class="feedback">{{ errorMessage }}</p>
+    </ion-text>
+
+    <div class="reading-loading" *ngIf="isReadingLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>Cargando lectura...</span>
+    </div>
+
+    <ion-text color="danger" *ngIf="readerErrorMessage">
+      <p class="feedback">{{ readerErrorMessage }}</p>
+    </ion-text>
+
+    <!-- Resultados reales que llegan desde Wikipedia. Cada item abre el lector interno. -->
+    <section class="api-results" *ngIf="results.length > 0 && !selectedArticle">
+      <h2>Top 5 resultados de Wikipedia</h2>
+      <button class="result-item" type="button" *ngFor="let result of results" (click)="openArticle(result.title)">
         <div>
-          <h3>Derivadas e Integrales</h3>
-          <p>Matemáticas</p>
+          <h3>{{ result.title }}</h3>
+          <p>{{ result.description }}</p>
+          <p *ngIf="getSavedProgress(result.title) > 0">Retomar desde {{ getSavedProgress(result.title) }}%</p>
         </div>
+        <ion-icon [name]="isFavorite(result.title) ? 'star' : 'book-outline'"></ion-icon>
+      </button>
+    </section>
+  </main>
 
-        <ion-icon name="star" color="warning"></ion-icon>
-      </ion-card-content>
-    </ion-card>
+  <main class="reader-page" *ngIf="selectedArticle as article">
+    <!-- Barra superior compacta del lector para ganar pantalla de lectura. -->
+    <nav class="reader-nav">
+      <button class="icon-action" type="button" (click)="closeArticle()" aria-label="Volver">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </button>
+      <span>{{ readingProgress }}%</span>
+      <button class="icon-action" type="button" (click)="toggleReaderMenu()" aria-label="Mas opciones">
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </button>
+    </nav>
 
-    <ion-card class="wiki-card">
-      <ion-card-content class="card-content">
-        <div>
-          <h3>Leyes de Newton</h3>
-          <p>Física</p>
-        </div>
+    <form class="reader-search" *ngIf="showReaderSearch" (ngSubmit)="findInArticle()">
+      <ion-item lines="none">
+        <ion-icon name="search-outline" slot="start"></ion-icon>
+        <ion-input
+          name="readerSearchTerm"
+          [(ngModel)]="readerSearchTerm"
+          placeholder="Buscar palabra en esta lectura"
+          enterkeyhint="search">
+        </ion-input>
+      </ion-item>
+      <button type="submit">Ir</button>
+    </form>
 
-        <ion-icon name="star-outline"></ion-icon>
-      </ion-card-content>
-    </ion-card>
+    <!-- Articulo renderizado dentro de la app, sin mandar al usuario al navegador. -->
+    <article class="reader-article" #readerArticle>
+      <p>Lectura en StudyApp</p>
+      <h1>{{ article.title }}</h1>
+      <div class="progress-track">
+        <span [style.width.%]="readingProgress"></span>
+      </div>
+      <p class="reader-message" *ngIf="readerMessage">{{ readerMessage }}</p>
+      <div class="wiki-html" [innerHTML]="article.html"></div>
+    </article>
 
-    <ion-card class="wiki-card ">
-      <ion-card-content class="card-content bottom">
-        <div>
-          <h3>Estructuras de Datos</h3>
-          <p>Programación</p>
-        </div>
+    <div class="reader-menu-backdrop" *ngIf="showReaderMenu" (click)="closeReaderMenu()"></div>
+    <aside class="reader-menu" *ngIf="showReaderMenu">
+      <div class="reader-menu-handle"></div>
+      <div class="reader-menu-actions">
+        <button type="button" (click)="scrollPage(-1)">
+          <ion-icon name="arrow-up-outline"></ion-icon>
+          <span>Subir</span>
+        </button>
+        <button type="button" (click)="scrollPage(1)">
+          <ion-icon name="arrow-down-outline"></ion-icon>
+          <span>Bajar</span>
+        </button>
+        <button type="button" (click)="toggleReaderSearch()">
+          <ion-icon name="search-outline"></ion-icon>
+          <span>Buscar</span>
+        </button>
+        <button type="button" (click)="saveReadingPoint()">
+          <ion-icon name="bookmark-outline"></ion-icon>
+          <span>Guardar</span>
+        </button>
+      </div>
 
-        <ion-icon name="star" color="warning"></ion-icon>
-      </ion-card-content>
-    </ion-card>
-  </div>
-
-  
-
-  <!-- Explorar por materia -->
-  <h2 class="section-title">Explorar por materia</h2>
-
-  <div class="subjects-grid">
-
-    <ion-card class="subject-card">
-      <ion-card-content>
-        <div class="icon purple">
-          <ion-icon name="analytics-outline"></ion-icon>
-        </div>
-        <p>Matemáticas</p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="subject-card">
-      <ion-card-content>
-        <div class="icon blue">
-          <ion-icon name="planet-outline"></ion-icon>
-        </div>
-        <p>Física</p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="subject-card">
-      <ion-card-content>
-        <div class="icon green">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <p>Programación</p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="subject-card">
-      <ion-card-content>
-        <div class="icon orange">
-          <ion-icon name="library-outline"></ion-icon>
-        </div>
-        <p>Historia</p>
-      </ion-card-content>
-    </ion-card>
-
-  </div>
-
+      <div class="reader-menu-list">
+        <button type="button" (click)="toggleFavorite()">
+          <ion-icon [name]="isFavorite(article.title) ? 'star' : 'star-outline'"></ion-icon>
+          <span>{{ isFavorite(article.title) ? 'Quitar de favoritos' : 'Guardar en favoritos' }}</span>
+        </button>
+        <button type="button" (click)="shareArticle()">
+          <ion-icon name="share-social-outline"></ion-icon>
+          <span>Compartir</span>
+        </button>
+        <button type="button" (click)="shareToRooms()">
+          <ion-icon name="people-outline"></ion-icon>
+          <span>Compartir en salas</span>
+        </button>
+      </div>
+    </aside>
+  </main>
 </ion-content>

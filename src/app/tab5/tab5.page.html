@@ -4,23 +4,21 @@
   <!-- Avatar + Info -->
   <div class="profile-header">
     <ion-buttons slot="end">
-      <ion-button fill="clear">
+      <ion-button fill="clear" (click)="editarPerfil()">
         <ion-icon name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <div class="avatar-wrapper">
       <img src="assets/avatar.png" alt="Avatar" />
-      <ion-button size="small" shape="round" class="edit-avatar">
+      <ion-button size="small" shape="round" class="edit-avatar" (click)="editarPerfil()">
         <ion-icon name="pencil-outline"></ion-icon>
       </ion-button>
     </div>
 
-    <h2>Pedro Gómez</h2>
-    <p class="username">@pedro_gomez</p>
+    <h2>{{ perfil.nombre }}</h2>
+    <p class="username">@{{ perfil.username }}</p>
 
-    <ion-badge color="primary" class="role-badge">
-      Estudiante
-    </ion-badge>
+    <ion-badge color="primary" class="role-badge">Estudiante</ion-badge>
   </div>
 
   <!-- Estadísticas -->
@@ -28,64 +26,22 @@
     <ion-card-content>
       <div class="stats-grid">
         <div class="stat-grid">
-          <h3>12</h3>
+          <h3>{{ perfil.salas }}</h3>
           <p>Salas</p>
         </div>
-
         <div class="stat-grid">
-          <h3>6</h3>
+          <h3>{{ perfil.equipos }}</h3>
           <p>Equipos</p>
         </div>
-
         <div class="stat-grid">
-          <h3>34</h3>
+          <h3>{{ perfil.recursos }}</h3>
           <p>Recursos</p>
         </div>
-
         <div class="stat-grid">
-          <h3>28</h3>
+          <h3>{{ perfil.contribuciones }}</h3>
           <p>Contribuciones</p>
         </div>
       </div>
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Actividad reciente -->
-  <h2 class="section-title">Actividad reciente</h2>
-
-  <ion-card class="activity-card">
-    <ion-card-content>
-
-      <div class="activity-item">
-        <div class="activity-icon blue">
-          <ion-icon name="analytics-outline"></ion-icon>
-        </div>
-        <div class="activity-text">
-          <h4>Editaste "Teorema de Taylor"</h4>
-          <p>Hace 2 horas</p>
-        </div>
-      </div>
-
-      <div class="activity-item">
-        <div class="activity-icon orange">
-          <ion-icon name="document-outline"></ion-icon>
-        </div>
-        <div class="activity-text">
-          <h4>Subiste "Formulario integrales.pdf"</h4>
-          <p>Ayer</p>
-        </div>
-      </div>
-
-      <div class="activity-item">
-        <div class="activity-icon green">
-          <ion-icon name="chatbubble-outline"></ion-icon>
-        </div>
-        <div class="activity-text">
-          <h4>Comentaste en "Leyes de Newton"</h4>
-          <p>Hace 3 días</p>
-        </div>
-      </div>
-
     </ion-card-content>
   </ion-card>
 
@@ -96,37 +52,22 @@
   </div>
 
   <div class="achievements">
-
     <div class="achievement-item">
-      <div class="badge-circle">
-        ⭐
-      </div>
+      <div class="badge-circle">⭐</div>
       <p>Colaborador<br><span>Nivel 2</span></p>
     </div>
-
     <div class="achievement-item">
-      <div class="badge-circle">
-        ⭐
-      </div>
+      <div class="badge-circle">⭐</div>
       <p>Constante<br><span>7 días</span></p>
     </div>
-
     <div class="achievement-item">
-      <div class="badge-circle">
-        ⭐
-      </div>
+      <div class="badge-circle">⭐</div>
       <p>Experto<br><span>5 wikis</span></p>
     </div>
-
     <div class="achievement-item">
-      <div class="badge-circle">
-        ⭐
-      </div>
+      <div class="badge-circle">⭐</div>
       <p>Ayudante<br><span>10 respuestas</span></p>
     </div>
-
   </div>
 
 </ion-content>
-
-<!-- Bottom Tabs -->
