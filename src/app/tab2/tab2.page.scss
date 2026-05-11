@@ -1,14 +1,23 @@
-.title{
+ion-content {
+  --background: #e8f0fe;
+}
+
+.title {
   font-weight: 700;
+  color: #1a1a2e;
+  font-size: 24px;
+  margin-bottom: 4px;
 }
 
 .subtitle {
-  color: var(--ion-color-medium);
+  color: #6b7280;
   margin-bottom: 15px;
+  font-size: 14px;
 }
 
-.mes{
+.mes {
   font-size: 18px;
+  color: #1a1a2e;
 }
 
 .month-selector {
@@ -16,23 +25,19 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-
 }
 
 .month-selector h3 {
   font-weight: 600;
   margin: 0;
-  padding: 0;
-  margin: 0;
 }
 
 .calendar-row {
   display: flex;
-    justify-content: center;
+  justify-content: center;
   margin-bottom: 20px;
-    width: 100%;
-    gap: .5em;
-
+  width: 100%;
+  gap: 0.5em;
 }
 
 .day {
@@ -40,22 +45,21 @@
   flex-direction: column;
   align-items: center;
   font-size: 13px;
-  color: var(--ion-color-medium);
+  cursor: pointer;
 }
 
-.day span{
+.day span {
   padding: 0;
   margin: 0;
 }
 
 .day-name {
   font-size: 12px;
-
 }
 
 .day.inactive {
   background: white;
-  color: var(--ion-color-medium);
+  color: #6b7280;
   padding: 10px 8px;
   border-radius: 50%;
   display: flex;
@@ -64,13 +68,26 @@
 }
 
 .day.active {
-  background: #7b5cf1;
+  background: #1a73e8;
   color: white;
-   padding: 8px 14px;
+  padding: 8px 14px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dot {
+  color: #1a73e8;
+  font-size: 16px;
+  line-height: 4px;
+}
+
+.section-title {
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 16px 0 8px 0;
+  font-size: 15px;
 }
 
 .event-card {
@@ -82,8 +99,6 @@
   border: 2px solid #ececec;
 }
 
-
-
 .event-header {
   display: flex;
   justify-content: space-between;
@@ -91,45 +106,81 @@
   margin: 0;
 }
 
-.event-type{
+.event-type {
   font-weight: 600;
   font-size: 14px;
 }
 
-.event-type.purplefont{
-  color: #7b5cf1;
-}
+.event-type.purplefont { color: #7b5cf1; }
+.event-type.greenfont  { color: #22c55e; }
+.event-type.orangefont { color: #f59e0b; }
+.event-type.bluefont   { color: #1a73e8; }
 
-.event-type.greenfont{
-  color: #22c55e; 
-}
-
-.event-type.orangefont{
-  color: #f59e0b;
-}
-
-.event-type.bluefont{
-  color: #3b82f6;
-}
-
-.event-card-title {
-
-  font-weight: 550;
+.event-time {
+  color: #6b7280;
+  font-size: 13px;
 }
 
 .event-card p {
   margin: 0;
   font-size: 13px;
-  color: var(--ion-color-medium);
+  color: #6b7280;
 }
 
 .event-card h4 {
-  margin: .5em 0;
+  margin: 0.5em 0;
   font-size: 17px;
+  color: #1a1a2e;
+  font-weight: 600;
 }
 
 /* Colores por tipo */
 .purple { border-left: 4px solid #7b5cf1; }
-.green { border-left: 4px solid #22c55e; }
+.green  { border-left: 4px solid #22c55e; }
 .orange { border-left: 4px solid #f59e0b; }
-.blue { border-left: 4px solid #3b82f6; }
+.blue   { border-left: 4px solid #1a73e8; }
+
+.invitacion {
+  border: 2px solid #1a73e8;
+}
+
+.invitacion-acciones {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.sala-tag {
+  font-size: 12px;
+  color: #1a73e8 !important;
+  margin-top: 4px !important;
+}
+
+.estado-invitados {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.badge.aceptado  { background: #dcfce7; color: #22c55e; }
+.badge.rechazado { background: #fee2e2; color: #ef4444; }
+.badge.pendiente { background: #fef9c3; color: #f59e0b; }
+
+.sin-eventos {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+ion-fab-button {
+  --background: #1a73e8;
+  --background-activated: #1557b0;
+}

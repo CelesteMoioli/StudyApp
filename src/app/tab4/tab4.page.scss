@@ -1,139 +1,139 @@
-.wiki-content {
+ion-content {
+  --background: #e8f0fe;
+}
+
+ion-toolbar {
   --background: white;
-  padding: 16px;
+  --color: #1a1a2e;
 }
 
 .title {
   font-weight: 700;
-  margin-bottom: .5em;
+  font-size: 24px;
+  color: #1a1a2e;
+  margin-bottom: 4px;
 }
 
-/* Subtítulo */
 .subtitle {
-  color: var(--ion-color-medium);
-  margin-bottom: .5em;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 12px;
 }
 
-/* Buscador + botón */
 .search-container {
   display: flex;
   align-items: center;
   padding: 0;
-margin-bottom: 1.5em;
-
+  margin-bottom: 12px;
 }
 
-  ion-searchbar {
-    --background: #fafafa;
-    --border-radius: 20px;
-    --margin: 0;
+ion-searchbar {
+  --background: white;
+  --border-radius: 20px;
+  --box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin: 0;
 }
 
-  .new-page-btn {
-
-  --background: #8658c7;
+.new-page-btn {
+  --background: #1a73e8;
+  --border-radius: 10px;
   display: flex;
   width: max-content;
-  --border-radius: 10px;
-  margin-bottom: 2em;
- box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
-
-
 
 .new-page-btn p {
   font-size: 13px;
-  text-wrap: nowrap;
+  white-space: nowrap;
+  margin: 0;
 }
 
-
-/* Títulos de sección */
 .section-title {
   font-size: 16px;
   font-weight: 600;
-  margin: 18px 0 12px 0;
+  color: #1a1a2e;
+  margin: 16px 0 10px 0;
 }
 
-/* Cards destacadas */
-.lista.wikis{
+.lista-wikis {
   display: flex;
   flex-direction: column;
   gap: 0;
+  margin-bottom: 8px;
 }
 
 .wiki-card {
-
-  
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin: 0;
+  box-shadow: none;
+  border-radius: 0;
 
   .card-content {
     display: flex;
     justify-content: space-between;
-
-    padding: 1em;
-
-    border: 2px solid #ececec;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    align-items: center;
+    padding: 14px;
+    background: white;
+    border: 1px solid #ececec;
+    border-bottom: none;
   }
 
- .card-content.top{
+  .card-content.top {
+    border-top-left-radius: 14px;
     border-top-right-radius: 14px;
-  border-top-left-radius: 14px;
   }
 
- .card-content.bottom{
+  .card-content.bottom {
+    border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
-  border-bottom-left-radius: 14px;
+    border-bottom: 1px solid #ececec;
   }
 
   h3 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
+    color: #1a1a2e;
     margin: 0;
   }
 
   p {
     font-size: 13px;
-    color: #6c757d;
+    color: #6b7280;
     margin: 2px 0 0 0;
   }
 }
 
-/* Grid materias */
 .subjects-grid {
   display: flex;
-  
-  gap: .1em;
-
-
+  gap: 6px;
   margin: 0;
 }
 
 .subject-card {
   text-align: center;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-   border: 2px solid #ececec;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ececec;
   margin: 0;
   width: 25%;
+  background: white;
 
   ion-card-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: .5em;
+    gap: 6px;
+    padding: 10px 4px;
   }
 
   p {
-
     font-weight: 500;
     margin: 0;
     font-size: 10px;
+    color: #1a1a2e;
   }
 }
 
-/* Iconos circulares */
 .icon {
   width: 48px;
   height: 48px;
@@ -145,18 +145,7 @@ margin-bottom: 1.5em;
   font-size: 22px;
 }
 
-.purple {
-  background: #7c4dff;
-}
-
-.blue {
-  background: #2979ff;
-}
-
-.green {
-  background: #00c853;
-}
-
-.orange {
-  background: #ff6d00;
-}
+.purple { background: #7b5cf1; }
+.blue   { background: #1a73e8; }
+.green  { background: #22c55e; }
+.orange { background: #f59e0b; }

@@ -1,104 +1,90 @@
-
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <!-- Subtítulo -->
-   <h2 class="title">Agenda Academica</h2>
-  <p class="subtitle">
-    Tus fechas importantes y tareas.
-  </p>
+  <h2 class="title">Agenda academica</h2>
+  <p class="subtitle">Tus fechas importantes y tareas.</p>
 
   <!-- Selector de mes -->
   <div class="month-selector">
-    <ion-button fill="clear" size="small">
+    <ion-button fill="clear" size="small" (click)="mesAnterior()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
-
-    <h3 class="mes">Mayo 2026</h3>
-
-    <ion-button fill="clear" size="small">
+    <h3 class="mes">{{ mesAnioTexto }}</h3>
+    <ion-button fill="clear" size="small" (click)="mesSiguiente()">
       <ion-icon name="chevron-forward-outline"></ion-icon>
     </ion-button>
   </div>
 
   <!-- Calendario horizontal -->
   <div class="calendar-row">
-    <div class="day inactive">
-      <span class="day-name">LUN</span>
-      <span class="day-name">20</span>
-    </div>
-
-    <div class="day inactive">
-      <span class="day-name">MAR</span>
-      <span class="day-name">21</span>
-    </div>
-
-    <div class="day active">
-      <span class="day-name">MIÉ</span>
-      <span class="day-name">22</span>
-    </div>
-
-    <div class="day inactive">
-      <span class="day-name">JUE</span>
-      <span class="day-name">23</span>
-    </div>
-
-    <div class="day inactive">
-      <span class="day-name">VIE</span>
-      <span class="day-name">24</span>
-    </div>
-
-    <div class="day inactive">
-      <span class="day-name">SÁB</span>
-      <span class="day-name">25</span>
-    </div>
-
-    <div class="day inactive">
-      <span class="day-name">DOM</span>
-      <span class="day-name">26</span>
+    <div
+      *ngFor="let dia of diasSemana"
+      class="day"
+      [class.active]="esDiaSeleccionado(dia)"
+      [class.inactive]="!esDiaSeleccionado(dia)"
+      (click)="seleccionarDia(dia)">
+      <span class="day-name">{{ nombresDias[dia.getDay()] }}</span>
+      <span class="day-name">{{ dia.getDate() }}</span>
+      <span class="dot" *ngIf="tieneEventos(dia)">•</span>
     </div>
   </div>
 
-  <!-- Lista de eventos -->
+  <!-- Invitaciones pendientes -->
+  <div *ngIf="invitacionesPendientes.length > 0">
+    <h4 class="section-title">📬 Invitaciones pendientes</h4>
+    <div *ngFor="let evento of invitacionesPendientes" class="event-card blue invitacion">
+      <div class="event-header">
+        <span class="event-type bluefont">{{ evento.tipo | titlecase }}</span>
+        <span class="event-time">{{ evento.horaInicio }}</span>
+      </div>
+      <h4>{{ evento.titulo }}</h4>
+      <p>{{ evento.descripcion }}</p>
+      <p *ngIf="evento.nombreSala">Sala: {{ evento.nombreSala }}</p>
+      <div class="invitacion-acciones">
+        <ion-button size="small" color="success" (click)="responder(evento, 'aceptado')">
+          ✓ Aceptar
+        </ion-button>
+        <ion-button size="small" color="danger" fill="outline" (click)="responder(evento, 'rechazado')">
+          ✗ Rechazar
+        </ion-button>
+      </div>
+    </div>
+  </div>
 
-  <div class="event-card purple">
+  <!-- Eventos del día -->
+  <h4 class="section-title" *ngIf="eventosDia.length > 0">
+    Eventos del día
+  </h4>
+
+  <div *ngFor="let evento of eventosDia"
+    class="event-card"
+    [ngClass]="colorTipo(evento.tipo)">
     <div class="event-header">
-      <span class="event-type purplefont">Entrega</span>
-      <span class="event-time">23:59</span>
+      <span class="event-type" [ngClass]="colorTextoTipo(evento.tipo)">
+        {{ evento.tipo | titlecase }}
+      </span>
+      <span class="event-time">{{ evento.horaInicio }}</span>
     </div>
-    <h4>Tarea: Derivadas</h4>
-    <p>Matemáticas</p>
+    <h4>{{ evento.titulo }}</h4>
+    <p>{{ evento.descripcion }}</p>
+    <p *ngIf="evento.nombreSala" class="sala-tag">📚 {{ evento.nombreSala }}</p>
+    <div *ngIf="!evento.esPersonal" class="estado-invitados">
+      <span *ngFor="let inv of evento.invitados | keyvalue" class="badge"
+        [class.aceptado]="inv.value === 'aceptado'"
+        [class.rechazado]="inv.value === 'rechazado'"
+        [class.pendiente]="inv.value === 'pendiente'">
+        {{ inv.key }}: {{ inv.value }}
+      </span>
+    </div>
   </div>
 
-  <div class="event-card green">
-    <div class="event-header">
-      <span class="event-type greenfont">Examen</span>
-      <span class="event-time">10:00</span>
-    </div>
-    <h4>Examen Parcial</h4>
-    <p>Física</p>
+  <!-- Sin eventos -->
+  <div *ngIf="eventosDia.length === 0" class="sin-eventos">
+    <p>No hay eventos para este día.</p>
   </div>
 
-  <div class="event-card orange">
-    <div class="event-header">
-      <span class="event-type orangefont">Proyecto</span>
-      <span class="event-time">23:59</span>
-    </div>
-    <h4>Entrega: Prototipo</h4>
-    <p>Programación</p>
-  </div>
-
-  <div class="event-card blue">
-    <div class="event-header">
-      <span class="event-type bluefont">Reunión</span>
-      <span class="event-time">16:00</span>
-    </div>
-    <h4>Reunión de equipo Alfa</h4>
-    <p>Matemáticas</p>
-  </div>
-
-  <!-- FAB -->
+  <!-- FAB para crear evento -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button (click)="abrirCrearEvento()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
