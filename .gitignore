@@ -71,3 +71,4 @@ Thumbs.db
 
 # Environment secrets
 .env
+src/environments/environment.ts
