@@ -1,0 +1,122 @@
+.title {
+  font-weight: 700;
+  margin-bottom: .5em;
+}
+
+
+
+.subtitle {
+  color: var(--ion-color-medium);
+  margin-bottom: .5em;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+margin-bottom: .5em;
+}
+
+.searchbar{
+    --background: #fafafa;
+    --border-radius: 20px;
+    
+}
+
+.filter-chips {
+  display: flex;
+  gap: .5em;
+  margin: .3em 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filter-chip{
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 .8em;
+
+    border: 2px solid #ececec;
+}
+
+.filter-chip.active{
+    background-color: #7b5cf1;
+    color: white;
+}
+
+.filter-chip p{
+    font-size: 13px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+ion-list{
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+.section-header h3{
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.seeall-btn{
+    background-color: white;
+}
+
+
+.seeall-btn p{
+    font-size: 14px;
+    color: #7b5cf1;
+}
+
+.file-item {
+  
+  margin-bottom: 0;
+  padding: 0;
+  border-radius: 16px;
+ border: 2px solid #ececec;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+}
+
+.file-icon {
+  width: 42px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.pdf {
+  background: #ef4444;
+}
+
+.ppt {
+  background: #f97316;
+}
+
+.doc {
+  background: #3b82f6;
+}
+
+.video {
+  background: #22c55e;
+}
+
+.file-meta {
+  font-size: 12px;
+  color: var(--ion-color-medium);
+}

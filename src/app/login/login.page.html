@@ -1,0 +1,152 @@
+<ion-content [fullscreen]="true">
+  <main class="login-page">
+    <header class="login-header">
+      <img src="assets/logo-studyapp.png" alt="StudyApp">
+      <span>StudyApp</span>
+    </header>
+
+    <section class="login-panel" *ngIf="!user; else accountPanel">
+      <div class="intro">
+        <h1>
+          {{ mode === 'signup'
+            ? 'Crear cuenta'
+            : mode === 'confirm'
+              ? 'Confirmar mail'
+              : mode === 'forgot' || mode === 'reset'
+                ? 'Recuperar clave'
+                : 'Bienvenido a StudyApp' }}
+        </h1>
+        <p>
+          {{ mode === 'signup'
+            ? 'Completá tus datos para empezar.'
+            : mode === 'confirm'
+              ? 'Ingresá el código que recibiste por mail.'
+              : mode === 'forgot'
+                ? 'Te vamos a enviar un código por mail.'
+                : mode === 'reset'
+                  ? 'Ingresá el código y elegí una nueva clave.'
+                  : 'Iniciá sesión para continuar.' }}
+        </p>
+      </div>
+
+      <div class="feedback-box warning" *ngIf="!authService.isConfigured">
+        Falta configurar el inicio de sesión.
+      </div>
+
+      <form (ngSubmit)="submit()">
+        <ion-item lines="none" *ngIf="mode === 'signup'">
+          <ion-input
+            name="name"
+            [(ngModel)]="name"
+            autocomplete="name"
+            label="Nombre"
+            labelPlacement="stacked">
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-input
+            name="email"
+            [(ngModel)]="email"
+            autocomplete="email"
+            inputmode="email"
+            label="Mail"
+            labelPlacement="stacked"
+            placeholder="alumno@studyapp.com"
+            type="email">
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="none" *ngIf="mode === 'confirm' || mode === 'reset'">
+          <ion-input
+            name="confirmationCode"
+            [(ngModel)]="confirmationCode"
+            autocomplete="one-time-code"
+            inputmode="numeric"
+            label="Código"
+            labelPlacement="stacked">
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="none" *ngIf="mode !== 'confirm' && mode !== 'forgot'">
+          <ion-input
+            name="password"
+            [(ngModel)]="password"
+            [autocomplete]="mode === 'reset' || mode === 'signup' ? 'new-password' : 'current-password'"
+            [label]="mode === 'reset' ? 'Nueva contraseña' : 'Contraseña'"
+            labelPlacement="stacked"
+            type="password">
+          </ion-input>
+        </ion-item>
+
+        <p class="password-hint" *ngIf="mode === 'signup' || mode === 'reset'">
+          Mínimo 8 caracteres, con mayúscula, minúscula y número. Ejemplo: StudyApp123
+        </p>
+
+        <ion-button expand="block" type="submit" [disabled]="isLoading">
+          <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+          <span *ngIf="!isLoading">
+            {{ mode === 'signin'
+              ? 'Ingresar'
+              : mode === 'signup'
+                ? 'Crear cuenta'
+                : mode === 'confirm'
+                  ? 'Confirmar cuenta'
+                  : mode === 'forgot'
+                    ? 'Enviar código'
+                    : 'Cambiar clave' }}
+          </span>
+        </ion-button>
+
+        <div class="feedback-box info" *ngIf="message">
+          {{ message }}
+        </div>
+
+        <div class="feedback-box error" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <button class="text-action muted" type="button" *ngIf="mode === 'signin'" (click)="setMode('forgot')">
+          Olvidé mi clave
+        </button>
+
+        <button class="text-action" type="button" *ngIf="mode === 'signin'" (click)="setMode('signup')">
+          ¿Sos nuevo? Registrate
+        </button>
+
+        <button class="text-action muted" type="button" *ngIf="mode === 'signin'" (click)="setMode('confirm')">
+          Ya tengo un código de verificación
+        </button>
+
+        <button class="text-action" type="button" *ngIf="mode === 'signup'" (click)="setMode('signin')">
+          Ya tengo cuenta
+        </button>
+
+        <button class="text-action" type="button" *ngIf="mode === 'confirm'" (click)="resendCode()" [disabled]="isLoading">
+          Reenviar código
+        </button>
+
+        <button class="text-action muted" type="button" *ngIf="mode === 'confirm'" (click)="setMode('signin')">
+          Volver al ingreso
+        </button>
+
+        <button class="text-action muted" type="button" *ngIf="mode === 'forgot' || mode === 'reset'" (click)="setMode('signin')">
+          Volver al ingreso
+        </button>
+      </form>
+    </section>
+
+    <ng-template #accountPanel>
+      <section class="login-panel">
+        <div class="intro">
+          <h1>Sesión activa</h1>
+          <p>{{ user?.email }}</p>
+        </div>
+
+        <ion-button expand="block" (click)="signOut()">
+          Cerrar sesión
+        </ion-button>
+      </section>
+    </ng-template>
+  </main>
+</ion-content>

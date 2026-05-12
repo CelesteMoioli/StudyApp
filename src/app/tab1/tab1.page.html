@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="ion-header">
+    <ion-title>Study <span>App</span></ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <div class="header-section">
+    <h2>Salas por materia</h2>
+    <p class="subtitle">Tus espacios de estudio organizados por materia.</p>
+
+    <ion-button expand="block" shape="round" class="new-room-btn" (click)="nuevaSala()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nueva sala
+    </ion-button>
+  </div>
+
+  <ion-list class="lista" lines="none">
+    <ion-item class="room-item" button *ngFor="let sala of salas; let i = index" (click)="abrirSala(sala)">
+      <ion-avatar slot="start" [class]="getColor(i)">
+        <ion-icon class="room-item-icon" [name]="getIcon(i)"></ion-icon>
+      </ion-avatar>
+
+      <ion-label class="room-label">
+        <h3>{{ sala.nombre }}</h3>
+        <p>{{ sala.descripcion }}</p>
+        <p class="activity">Creada: {{ sala.fechaCreacion }}</p>
+      </ion-label>
+
+      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="salas.length === 0" lines="none">
+      <ion-label class="ion-text-center" color="medium">
+        <p>No hay salas todavía. ¡Creá la primera!</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

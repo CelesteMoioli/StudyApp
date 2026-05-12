@@ -1,0 +1,103 @@
+.ion-header{
+    background-color: #1ac7c7;
+    color: #12135D;
+    font-weight: 900;
+}
+
+.ion-header span{
+    color: #8658c7;
+    font-weight: 700;
+}
+
+.header-section {
+  margin-bottom: 20px;
+}
+
+.header-section h2 {
+  font-weight: 700;
+}
+
+.subtitle {
+  color: var(--ion-color-medium);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.new-room-btn {
+  margin-top: 10px;
+  --background: #8658c7;
+  display: flex;
+  width: max-content;
+  --border-radius: 10px;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.room-item {
+  --border-radius: 16px;
+  margin-bottom: 12px;
+  padding: 1px;
+  border: .5px solid #b6b6b6;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.lista{
+    padding: 0;
+}
+
+.room-label h3{
+    font-size: 16px;
+}
+
+.room-item h3 {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.room-item p {
+  font-size: 13px;
+  margin: 0;
+}
+
+.room-item-icon{
+    width: 2em;
+    height: 2em;
+}
+
+.activity {
+  color: var(--ion-color-medium);
+}
+
+/* Colores de avatares */
+
+ion-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.avatar-purple,
+.avatar-indigo,
+.avatar-green,
+.avatar-orange{
+    width: 4em;
+  height: 4em;
+  border-radius: 15px;
+}
+
+.avatar-purple {
+  background: #7b5cf1;
+}
+
+.avatar-indigo {
+  background: #6366f1;
+}
+
+.avatar-green {
+  background: #22c55e;
+}
+
+.avatar-orange {
+  background: #f59e0b;
+}

@@ -1,0 +1,57 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <h2 class="title">Repositorio de recursos</h2>
+  <p class="subtitle">Encuentra y comparte materiales útiles para estudiar.</p>
+
+  <!-- Buscador -->
+  <div class="search-container">
+    <ion-searchbar class="searchbar" placeholder="Buscar recursos..." show-clear-button="focus"></ion-searchbar>
+    <ion-button fill="clear">
+      <ion-icon name="options-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-chips">
+    <div class="filter-chip active"><p>Todos</p></div>
+    <div class="filter-chip"><p>Documentos</p></div>
+    <div class="filter-chip"><p>Presentaciones</p></div>
+    <div class="filter-chip"><p>Videos</p></div>
+  </div>
+
+  <!-- Lista de recursos desde Firebase -->
+  <div class="section-header">
+    <h3>Recientes</h3>
+  </div>
+
+  <ion-list lines="none">
+    <ion-item class="file-item" button *ngFor="let recurso of recursos">
+      <div slot="start" [class]="'file-icon ' + getIconClass(recurso.tipo)">
+        <ion-icon *ngIf="isVideo(recurso.tipo)" name="play"></ion-icon>
+        <span *ngIf="!isVideo(recurso.tipo)">{{ recurso.tipo }}</span>
+      </div>
+
+      <ion-label>
+        <h4>{{ recurso.nombre }}</h4>
+        <p>{{ recurso.materia }}</p>
+        <p class="file-meta">{{ recurso.tipo }} · Subido {{ recurso.fechaSubida }}</p>
+      </ion-label>
+
+      <ion-icon name="ellipsis-vertical" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="recursos.length === 0" lines="none">
+      <ion-label class="ion-text-center" color="medium">
+        <p>No hay recursos todavía. ¡Agregá uno con el botón +!</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- FAB -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="nuevoRecurso()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
