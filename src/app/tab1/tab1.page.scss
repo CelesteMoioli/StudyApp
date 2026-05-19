@@ -1,3 +1,7 @@
+ion-content {
+  --background: #dbeafe;
+}
+
 .ion-header{
     background-color: #1ac7c7;
     color: #12135D;
@@ -5,7 +9,7 @@
 }
 
 .ion-header span{
-    color: #8658c7;
+    color: #2563eb;
     font-weight: 700;
 }
 
@@ -25,7 +29,7 @@
 
 .new-room-btn {
   margin-top: 10px;
-  --background: #8658c7;
+  --background: #2563eb;
   display: flex;
   width: max-content;
   --border-radius: 10px;
@@ -33,16 +37,17 @@
 }
 
 .room-item {
+  --background: #ffffff;
   --border-radius: 16px;
   margin-bottom: 12px;
   padding: 1px;
-  border: .5px solid #b6b6b6;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
-
 .lista{
     padding: 0;
+    background: #dbeafe
 }
 
 .room-label h3{
@@ -87,11 +92,11 @@ ion-avatar {
 }
 
 .avatar-purple {
-  background: #7b5cf1;
+  background: #2563eb;
 }
 
 .avatar-indigo {
-  background: #6366f1;
+  background: #3b82f6;
 }
 
 .avatar-green {

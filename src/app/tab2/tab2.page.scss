@@ -1,3 +1,7 @@
+ion-content {
+  --background: #dbeafe;
+}
+
 .title{
   font-weight: 700;
 }
@@ -60,13 +64,13 @@
 }
 
 .day.today {
-  color: #7b5cf1;
+  color: #2563eb;
   font-weight: 700;
-  border: 1px solid #7b5cf1;
+  border: 1px solid #2563eb;
 }
 
 .day.active {
-  background: #7b5cf1;
+  background: #2563eb;
   color: white;
 }
 
@@ -94,7 +98,7 @@
 }
 
 .event-type.purplefont{
-  color: #7b5cf1;
+  color: #2563eb;
 }
 
 .event-type.greenfont{
@@ -126,7 +130,7 @@
 }
 
 /* Colores por tipo */
-.purple { border-left: 4px solid #7b5cf1; }
+.purple { border-left: 4px solid #2563eb; }
 .green { border-left: 4px solid #22c55e; }
 .orange { border-left: 4px solid #f59e0b; }
 .blue { border-left: 4px solid #3b82f6; }

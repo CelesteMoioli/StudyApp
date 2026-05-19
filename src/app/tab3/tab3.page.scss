@@ -1,3 +1,7 @@
+ion-content {
+  --background: #dbeafe;
+}
+
 .title {
   font-weight: 700;
   margin-bottom: .5em;
@@ -42,7 +46,7 @@ margin-bottom: .5em;
 }
 
 .filter-chip.active{
-    background-color: #7b5cf1;
+    background-color: #2563eb;
     color: white;
 }
 
@@ -58,9 +62,9 @@ margin-bottom: .5em;
 }
 
 ion-list{
-    margin: 0;
     padding: 0;
-    gap: 0;
+    background: #dbeafe
+
 }
 
 .section-header h3{
@@ -75,17 +79,16 @@ ion-list{
 
 .seeall-btn p{
     font-size: 14px;
-    color: #7b5cf1;
+    color: #2563eb;
 }
 
 .file-item {
-  
-  margin-bottom: 0;
+  margin-bottom: 12px;
   padding: 0;
   border-radius: 16px;
- border: 2px solid #ececec;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
+  border: 1px solid #bfdbfe;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+  background: #ffffff;
 }
 
 .file-icon {
@@ -101,7 +104,7 @@ ion-list{
 }
 
 .pdf {
-  background: #ef4444;
+  background: #2563eb;
 }
 
 .ppt {
@@ -115,6 +118,7 @@ ion-list{
 .video {
   background: #22c55e;
 }
+
 
 .file-meta {
   font-size: 12px;

@@ -26,10 +26,11 @@
 
   <ion-list lines="none">
     <ion-item class="file-item" button *ngFor="let recurso of recursos">
-      <div slot="start" [class]="'file-icon ' + getIconClass(recurso.tipo)">
-        <ion-icon *ngIf="isVideo(recurso.tipo)" name="play"></ion-icon>
-        <span *ngIf="!isVideo(recurso.tipo)">{{ recurso.tipo }}</span>
-      </div>
+<div slot="start" [class]="'file-icon ' + getIconClass(recurso.tipo)">
+  <ion-icon *ngIf="isVideo(recurso.tipo)" name="play"></ion-icon>
+  <ion-icon *ngIf="!recurso.tipo" name="document-outline"></ion-icon>
+  <span *ngIf="!isVideo(recurso.tipo) && recurso.tipo">{{ recurso.tipo }}</span>
+</div>
 
       <ion-label>
         <h4>{{ recurso.nombre }}</h4>

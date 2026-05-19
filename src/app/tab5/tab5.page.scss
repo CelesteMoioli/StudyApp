@@ -1,6 +1,6 @@
 .profile-page {
-  --background: #f6f7fb;
-  background: #f6f7fb;
+  --background: #dbeafe;
+  background: #dbeafe;
   padding-bottom: 90px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -75,13 +75,12 @@ ion-title {
 }
 
 .role-badge {
-  --background: #5b4bff;
+  --background: #2563eb;
   --color: #ffffff;
   padding: 6px 14px;
   border-radius: 20px;
   font-weight: 500;
 }
-
 /* ==============================
    STATS CARD
 ============================== */
@@ -215,7 +214,7 @@ ion-title {
 
 .see-all {
   font-size: 13px;
-  color: #5b4bff;
+  color: #2563eb;
   font-weight: 500;
 }
 
@@ -234,13 +233,13 @@ ion-title {
   height: 64px;
   margin: 0 auto 8px auto;
   border-radius: 50%;
-  background: linear-gradient(145deg, #6c5ce7, #4b39ef);
+  background: linear-gradient(145deg, #2563eb, #3b82f6);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   color: #ffd700;
-  box-shadow: 0 6px 14px rgba(91, 75, 255, 0.3);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
 }
 
 .achievement-item p {
@@ -265,10 +264,9 @@ ion-tab-bar {
 
 ion-tab-button {
   --color: #9e9e9e;
-  --color-selected: #5b4bff;
+  --color-selected: #2563eb;
   font-size: 11px;
 }
-
 ion-tab-button ion-icon {
   font-size: 20px;
 }
