@@ -89,27 +89,20 @@ ion-title {
   border-radius: 20px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
   margin-bottom: 26px;
-
+  gap: 2em;
   display: flex;
-  justify-content: center;
-  padding: 1em;
+  justify-content: space-evenly;
+  padding: 1em 0;
 }
-
-
-
 
 .stats-grid {
   display: flex;
-    gap: 1em;
-  
-
+    gap: 3em;
 }
 
 .stat-grid{
-      width: max-content;
       text-align: center;
       text-wrap: nowrap;
-
 }
 
 .stats-grid h3 {
@@ -203,7 +196,8 @@ ion-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .section-header h2 {
