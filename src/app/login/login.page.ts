@@ -264,7 +264,7 @@ export class LoginPage {
     }
 
     if (message.includes('Password did not conform with policy')) {
-      return 'La clave no cumple la política: usá mayúscula, minúscula y número. Ejemplo: StudyApp123';
+      return 'La clave no cumple la política: usá mayúscula, minúscula, número y un símbolo. Ejemplo: Estudio123!';
     }
 
     if (message.includes('User already exists')) {
@@ -283,8 +283,8 @@ export class LoginPage {
       return 'Revisá los datos ingresados e intentá otra vez.';
     }
 
-    if (message.includes('InvalidPasswordException')) {
-      return 'La clave no cumple los requisitos. Probá con una mayúscula, una minúscula y un número.';
+   if (message.includes('InvalidPasswordException')) {
+      return 'La clave no cumple los requisitos. Usá mayúscula, minúscula, número y un símbolo (ej: Estudio123!)';
     }
 
     if (message.includes('Unable to verify secret hash')) {
