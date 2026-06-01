@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { DbService } from '../services/db.service';
 import { AvatarPickerComponent } from './avatar-picker/avatar-picker.component';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-tab5',
@@ -77,18 +78,69 @@ export class Tab5Page implements OnInit, OnDestroy {
   }
 
   async cambiarAvatar(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Foto de perfil',
+      buttons: [
+  {
+    text: 'Elegir avatar',
+    cssClass: 'alert-button-avatar',
+    handler: () => {
+      this.abrirAvatarPicker();
+      return false;
+    }
+  },
+  {
+    text: 'Tomar foto',
+    handler: () => {
+      this.tomarFoto(CameraSource.Camera);
+      return false;
+    }
+  },
+  {
+    text: 'Elegir de galería',
+    handler: () => {
+      this.tomarFoto(CameraSource.Photos);
+      return false;
+    }
+  },
+  {
+    text: 'Cancelar',
+    role: 'cancel'
+  }
+]
+    });
+    await alert.present();
+  }
+
+
+  async abrirAvatarPicker(): Promise<void> {
     const modal = await this.modalController.create({
       component: AvatarPickerComponent,
       breakpoints: [0, 0.75, 1],
       initialBreakpoint: 0.75
     });
-
     await modal.present();
-
     const { data } = await modal.onDidDismiss();
     if (data?.avatar) {
       this.perfil.avatarUrl = data.avatar;
       await this.db.setPerfil(this.userEmail, this.perfil);
+    }
+  }
+
+  async tomarFoto(source: CameraSource): Promise<void> {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 80,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: source
+      });
+      if (image.dataUrl) {
+        this.perfil.avatarUrl = image.dataUrl;
+        await this.db.setPerfil(this.userEmail, this.perfil);
+      }
+    } catch (e) {
+      // usuario canceló
     }
   }
 
