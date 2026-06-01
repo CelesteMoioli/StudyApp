@@ -1,5 +1,10 @@
 ion-content {
-  --background: #dbeafe;
+  --background: linear-gradient(
+    135deg,
+    #c8e6ff 0%,
+    #b7d4ff 40%,
+    #c8c3ff 100%
+  );
 }
 
 .ion-header{
@@ -47,7 +52,7 @@ ion-content {
 }
 .lista{
     padding: 0;
-    background: #dbeafe
+    background: none;
 }
 
 .room-label h3{

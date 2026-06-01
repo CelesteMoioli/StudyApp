@@ -1,5 +1,10 @@
 ion-content {
-  --background: #dbeafe;
+  --background: linear-gradient(
+    135deg,
+    #c8e6ff 0%,
+    #b7d4ff 40%,
+    #c8c3ff 100%
+  );
 }
 
 .title {
@@ -41,8 +46,8 @@ margin-bottom: .5em;
     justify-content: center;
     align-items: center;
     padding: 0 .8em;
+  background-color: #fafafa;
 
-    border: 2px solid #ececec;
 }
 
 .filter-chip.active{
@@ -63,7 +68,7 @@ margin-bottom: .5em;
 
 ion-list{
     padding: 0;
-    background: #dbeafe
+    background: none;
 
 }
 
