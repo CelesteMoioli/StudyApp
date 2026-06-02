@@ -1,0 +1,142 @@
+ion-content {
+  --background: #dbeafe;
+}
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 28px 22px;
+}
+
+.login-header {
+  align-items: center;
+  color: var(--ion-text-color);
+  display: flex;
+  font-size: 18px;
+  font-weight: 800;
+  gap: 10px;
+}
+
+.login-header img {
+  height: 38px;
+  object-fit: contain;
+  width: 48px;
+}
+
+.login-panel {
+  margin-top: 72px;
+}
+
+.intro h1 {
+  color: var(--ion-text-color);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.12;
+  margin: 0;
+}
+
+.intro p {
+  color: #475467;
+  font-size: 18px;
+  margin: 8px 0 48px;
+}
+
+form {
+  display: grid;
+  gap: 16px;
+}
+
+ion-item {
+  --background: #ffffff;
+  --border-radius: 14px;
+  --highlight-color-focused: var(--ion-color-primary);
+  --highlight-color-valid: var(--ion-color-primary);
+  --highlight-color-invalid: #b42318;
+  border: 1px solid #bfdbfe;
+  border-radius: 14px;
+}
+
+ion-item.ion-valid,
+ion-item.ion-focused,
+ion-input.ion-valid,
+ion-input.ion-focused {
+  --highlight-color: var(--ion-color-primary);
+  --highlight-color-valid: var(--ion-color-primary);
+}
+
+ion-input {
+  --color: var(--ion-text-color);
+  --placeholder-color: #667085;
+  --placeholder-opacity: 0.8;
+}
+
+ion-input::part(label) {
+  color: #475467;
+}
+
+ion-input.ion-focused::part(label),
+ion-input.ion-valid::part(label) {
+  color: var(--ion-color-primary);
+}
+
+ion-button {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  --border-radius: 14px;
+  font-weight: 800;
+  height: 54px;
+  margin-top: 22px;
+}
+
+.text-action {
+  background: transparent;
+  border: 0;
+  color: var(--ion-color-primary);
+  font-size: 15px;
+  font-weight: 700;
+  justify-self: center;
+  padding: 0;
+}
+
+.text-action.muted {
+  color: #475467;
+  font-weight: 600;
+}
+
+.password-hint {
+  font-size: 13px;
+  line-height: 1.35;
+  margin: -6px 4px 0;
+}
+
+.password-hint {
+  color: #475467;
+}
+
+.feedback-box {
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  padding: 11px 12px;
+}
+
+.feedback-box.warning {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+  margin-bottom: 16px;
+}
+
+.feedback-box.error {
+  background: #fffbfa;
+  border: 1px solid #fecdca;
+  color: #b42318;
+}
+
+.feedback-box.info {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+}

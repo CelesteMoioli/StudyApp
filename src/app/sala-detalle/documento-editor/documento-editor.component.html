@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrar()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ documento?.titulo || 'Nuevo documento' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardar()" [disabled]="!titulo.trim()">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Barra de formato -->
+  <ion-toolbar class="format-toolbar">
+    <div class="format-row">
+
+      <!-- Estilo de texto -->
+      <select class="format-select" (change)="aplicarBloque($event)">
+        <option value="p">Normal</option>
+        <option value="h1">Título 1</option>
+        <option value="h2">Título 2</option>
+        <option value="h3">Título 3</option>
+      </select>
+
+      <!-- Tamaño -->
+      <select class="format-select size-select" (change)="aplicarTamano($event)">
+        <option value="14px">14</option>
+        <option value="16px">16</option>
+        <option value="18px">18</option>
+        <option value="24px">24</option>
+        <option value="32px">32</option>
+      </select>
+
+      <div class="divider"></div>
+
+      <!-- Negrita / Cursiva / Subrayado -->
+      <button class="fmt-btn" (click)="cmd('bold')" title="Negrita"><b>B</b></button>
+      <button class="fmt-btn" (click)="cmd('italic')" title="Cursiva"><i>I</i></button>
+      <button class="fmt-btn" (click)="cmd('underline')" title="Subrayado"><u>U</u></button>
+
+      <div class="divider"></div>
+
+      <!-- Listas -->
+      <button class="fmt-btn" (click)="cmd('insertUnorderedList')" title="Lista">
+        <ion-icon name="list-outline"></ion-icon>
+      </button>
+      <button class="fmt-btn" (click)="cmd('insertOrderedList')" title="Lista numerada">
+        <ion-icon name="list-number-outline"></ion-icon>
+      </button>
+
+      <div class="divider"></div>
+
+      <!-- Color de texto -->
+      <label class="fmt-btn color-btn" title="Color de texto">
+        <ion-icon name="color-palette-outline"></ion-icon>
+        <input type="color" (change)="aplicarColor($event)" />
+      </label>
+
+      <div class="divider"></div>
+
+      <!-- Imagen y Wiki -->
+      <button class="fmt-btn" (click)="insertarImagen()" title="Insertar imagen">
+        <ion-icon name="image-outline"></ion-icon>
+      </button>
+      <button class="fmt-btn wiki-btn" (click)="insertarWiki()" title="Pegar de Wiki">
+        <ion-icon name="library-outline"></ion-icon>
+      </button>
+
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Título editable solo al crear -->
+  <ion-item lines="none" class="titulo-item" *ngIf="!documento">
+    <ion-input
+      [(ngModel)]="titulo"
+      placeholder="Título del documento">
+    </ion-input>
+  </ion-item>
+
+  <!-- Editor rico -->
+  <div
+    #editor
+    class="rich-editor"
+    contenteditable="true"
+    (input)="onCambio()"
+    (keydown)="onKeydown($event)"
+    [attr.data-placeholder]="'Empezá a escribir...'"
+    spellcheck="true">
+  </div>
+
+  <div class="last-edit" *ngIf="documento?.ultimaEdicion">
+    Última edición: {{ documento.ultimaEdicion | date:'dd/MM/yyyy HH:mm' }}
+  </div>
+
+</ion-content>
+
+<!-- Input de imagen oculto -->
+<input #fileInput type="file" accept="image/*" style="display:none" (change)="onImagenSeleccionada($event)" />

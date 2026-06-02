@@ -1,0 +1,24 @@
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.avatar-option {
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: border-color 0.2s;
+
+  img {
+    width: 100%;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+  }
+
+  &.selected {
+    border-color: var(--ion-color-primary);
+  }
+}

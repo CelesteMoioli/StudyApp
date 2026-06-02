@@ -1,0 +1,53 @@
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <h2 class="title">Agenda académica</h2>
+  <p class="subtitle">Tus fechas importantes y tareas.</p>
+
+  <!-- Selector de mes/semana -->
+  <div class="month-selector">
+    <ion-button fill="clear" size="small" (click)="prevWeek()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <h3 class="mes">{{ mesActual }}</h3>
+    <ion-button fill="clear" size="small" (click)="nextWeek()">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Calendario horizontal dinámico -->
+  <div class="calendar-row">
+    <div
+      *ngFor="let dia of weekDays"
+      [class]="'day' + (isSelected(dia.fecha) ? ' active' : '') + (isToday(dia.fecha) && !isSelected(dia.fecha) ? ' today' : '') + (!isSelected(dia.fecha) && !isToday(dia.fecha) ? ' inactive' : '')"
+      (click)="selectDay(dia.fecha)">
+      <span class="day-name">{{ dia.nombre }}</span>
+      <span class="day-name">{{ dia.num }}</span>
+    </div>
+  </div>
+
+  <!-- Lista de eventos filtrados -->
+  <div *ngFor="let evento of eventosFiltrados" [class]="'event-card ' + getCardClass(evento.tipo)">
+    <div class="event-header">
+      <span [class]="'event-type ' + getFontClass(evento.tipo)">{{ evento.tipo }}</span>
+      <span class="event-time">{{ evento.hora }}</span>
+    </div>
+    <h4>{{ evento.titulo }}</h4>
+    <p>{{ evento.materia }}</p>
+    <p *ngIf="evento.fecha" style="font-size: 12px; opacity: 0.7">{{ evento.fecha }}</p>
+  </div>
+
+  <div *ngIf="eventosFiltrados.length === 0" class="ion-text-center ion-padding">
+    <p style="color: var(--ion-color-medium)">
+      {{ selectedDate ? 'Sin eventos este día.' : 'No hay eventos. ¡Agregá uno con el botón +!' }}
+    </p>
+  </div>
+
+  <!-- FAB -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="nuevoEvento()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

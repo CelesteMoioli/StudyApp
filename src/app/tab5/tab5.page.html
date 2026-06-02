@@ -1,0 +1,70 @@
+
+<ion-content [fullscreen]="true" class="ion-padding profile-page">
+
+  <!-- Avatar + Info -->
+  <div class="profile-header">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="editarPerfil()">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="avatar-wrapper">
+      <img [src]="perfil.avatarUrl || 'assets/avatar.png'" alt="Avatar" />
+      <ion-button size="small" shape="round" class="edit-avatar" (click)="cambiarAvatar()">
+  <ion-icon name="create" slot="icon-only"></ion-icon>
+</ion-button>
+    </div>
+
+    <h2>{{ perfil.nombre }}</h2>
+    <p class="username">@{{ perfil.username }}</p>
+
+    <ion-badge color="primary" class="role-badge">Estudiante</ion-badge>
+  </div>
+
+  <!-- Estadísticas -->
+  <ion-card class="stats-card">
+    <ion-card-content>
+      <div class="stats-grid">
+        <div class="stat-grid">
+          <h3>{{ perfil.salas }}</h3>
+          <p>Salas</p>
+        </div>
+        <div class="stat-grid">
+          <h3>{{ perfil.recursos }}</h3>
+          <p>Recursos</p>
+        </div>
+        <div class="stat-grid">
+          <h3>{{ perfil.contribuciones }}</h3>
+          <p>Aportes</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+
+  <!-- Logros -->
+  <div class="section-header">
+    <h2>Logros</h2>
+    <span class="see-all">Ver todos</span>
+  </div>
+
+  <div class="achievements">
+    <div class="achievement-item">
+      <div class="badge-circle">⭐</div>
+      <p>Colaborador<br><span>Nivel 2</span></p>
+    </div>
+    <div class="achievement-item">
+      <div class="badge-circle">⭐</div>
+      <p>Constante<br><span>7 días</span></p>
+    </div>
+    <div class="achievement-item">
+      <div class="badge-circle">⭐</div>
+      <p>Experto<br><span>5 wikis</span></p>
+    </div>
+    <div class="achievement-item">
+      <div class="badge-circle">⭐</div>
+      <p>Ayudante<br><span>10 respuestas</span></p>
+    </div>
+  </div>
+
+</ion-content>

@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ salaNombre }}</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <div class="presencia">
+      <ion-icon name="people-outline"></ion-icon>
+      <span *ngFor="let p of presencia; let last = last">
+        {{ p.nombre }}<span *ngIf="!last">, </span>
+      </span>
+      <span *ngIf="presencia.length === 0" style="color: var(--ion-color-medium)">Nadie más en la sala</span>
+    </div>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <div class="documentos-bar">
+      <ion-button fill="clear" size="small" (click)="nuevoDocumento()">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Crear documento
+      </ion-button>
+      <ion-button
+        fill="clear"
+        size="small"
+        *ngFor="let doc of documentos"
+        (click)="abrirDocumento(doc)">
+        <ion-icon name="document-outline" slot="start"></ion-icon>
+        {{ doc.titulo }}
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <div class="chat-container">
+    <div *ngFor="let msg of mensajes" [class]="esMio(msg) ? 'bubble mio' : 'bubble otro'">
+      <span class="autor" *ngIf="!esMio(msg)">{{ msg.autor }}</span>
+      <p>{{ msg.texto }}</p>
+      <span class="hora">{{ msg.timestamp | date:'HH:mm' }}</span>
+    </div>
+    <div *ngIf="mensajes.length === 0" class="empty-chat">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+      <p>Todavía no hay mensajes. ¡Sé el primero!</p>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="input-row">
+      <ion-input
+        [(ngModel)]="nuevoMensaje"
+        placeholder="Escribí un mensaje..."
+        (keyup.enter)="enviar()">
+      </ion-input>
+      <ion-button fill="clear" (click)="enviar()" [disabled]="!nuevoMensaje.trim()">
+        <ion-icon name="send-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

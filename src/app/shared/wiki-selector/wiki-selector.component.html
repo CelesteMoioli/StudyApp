@@ -1,0 +1,53 @@
+<div class="wiki-selector">
+
+  <!-- Buscador -->
+  <div class="search-row" *ngIf="!selectedArticle">
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      placeholder="Buscar en Wikipedia..."
+      (keyup.enter)="buscar()">
+    </ion-searchbar>
+    <ion-button expand="block" (click)="buscar()" [disabled]="isLoading">
+      <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+      <span *ngIf="!isLoading">Buscar</span>
+    </ion-button>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <div class="loading-row" *ngIf="isReadingLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>Cargando artículo...</span>
+    </div>
+
+    <div class="results-list" *ngIf="results.length > 0">
+      <button
+        class="result-item"
+        *ngFor="let r of results"
+        (click)="abrirArticulo(r.title)">
+        <div>
+          <h4>{{ r.title }}</h4>
+          <p>{{ r.description }}</p>
+        </div>
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Vista previa del artículo -->
+  <div class="article-preview" *ngIf="selectedArticle">
+    <div class="preview-header">
+      <ion-button fill="clear" size="small" (click)="volver()">
+        <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+        Volver
+      </ion-button>
+      <ion-button size="small" color="primary" (click)="usarArticulo()">
+        <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+        Usar este artículo
+      </ion-button>
+    </div>
+
+    <h3 class="article-title">{{ selectedArticle.title }}</h3>
+    <div class="article-html" [innerHTML]="selectedArticle.html"></div>
+  </div>
+
+</div>

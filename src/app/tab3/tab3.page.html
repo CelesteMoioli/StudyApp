@@ -1,0 +1,156 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <h2 class="title">Repositorio de recursos</h2>
+  <p class="subtitle">
+    Encuentra y comparte materiales útiles para estudiar.
+  </p>
+
+  <!-- Buscador -->
+  <div class="search-container">
+
+    <ion-searchbar
+      class="searchbar"
+      placeholder="Buscar recursos..."
+      show-clear-button="focus"
+      (ionInput)="buscar($event)">
+    </ion-searchbar>
+
+    <ion-button fill="clear">
+      <ion-icon name="options-outline"></ion-icon>
+    </ion-button>
+
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-chips">
+
+    <div
+      class="filter-chip"
+      [class.active]="filtroSeleccionado === 'Todos'"
+      (click)="seleccionarFiltro('Todos')">
+
+      <p>Todos</p>
+
+    </div>
+
+    <div
+      class="filter-chip"
+      [class.active]="filtroSeleccionado === 'Documentos'"
+      (click)="seleccionarFiltro('Documentos')">
+
+      <p>Documentos</p>
+
+    </div>
+
+    <div
+      class="filter-chip"
+      [class.active]="filtroSeleccionado === 'Presentaciones'"
+      (click)="seleccionarFiltro('Presentaciones')">
+
+      <p>Presentaciones</p>
+
+    </div>
+
+    <div
+      class="filter-chip"
+      [class.active]="filtroSeleccionado === 'Videos'"
+      (click)="seleccionarFiltro('Videos')">
+
+      <p>Videos</p>
+
+    </div>
+
+  </div>
+
+  <!-- Encabezado -->
+  <div class="section-header">
+    <h3>Recientes</h3>
+  </div>
+
+  <!-- Lista -->
+  <ion-list lines="none">
+
+    <ion-item
+      class="file-item"
+      button
+      *ngFor="let recurso of recursosFiltrados">
+
+      <div
+        slot="start"
+        [class]="'file-icon ' + getIconClass(recurso.tipo)">
+
+        <ion-icon
+          *ngIf="isVideo(recurso.tipo)"
+          name="play">
+        </ion-icon>
+
+        <span
+          *ngIf="!isVideo(recurso.tipo) && recurso.tipo">
+
+          {{ recurso.tipo }}
+
+        </span>
+
+        <ion-icon
+          *ngIf="!recurso.tipo"
+          name="document-outline">
+        </ion-icon>
+
+      </div>
+
+      <ion-label>
+
+        <h4>{{ recurso.nombre }}</h4>
+
+        <p>{{ recurso.materia }}</p>
+
+        <p class="file-meta">
+          {{ recurso.tipo }}
+          ·
+          Subido {{ recurso.fechaSubida }}
+        </p>
+
+      </ion-label>
+
+      <ion-icon
+        name="ellipsis-vertical"
+        slot="end">
+      </ion-icon>
+
+    </ion-item>
+
+    <ion-item
+      *ngIf="recursosFiltrados.length === 0"
+      lines="none">
+
+      <ion-label
+        class="ion-text-center"
+        color="medium">
+
+        <p>
+          No se encontraron recursos.
+        </p>
+
+      </ion-label>
+
+    </ion-item>
+
+  </ion-list>
+
+  <!-- FAB -->
+
+  <ion-fab
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed">
+
+    <ion-fab-button
+      (click)="nuevoRecurso()">
+
+      <ion-icon name="add"></ion-icon>
+
+    </ion-fab-button>
+
+  </ion-fab>
+
+</ion-content>
