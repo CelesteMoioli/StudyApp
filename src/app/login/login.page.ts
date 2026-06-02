@@ -23,6 +23,11 @@ export class LoginPage {
 
   constructor(public authService: AuthService, private router: Router) {}
 
+
+  /**
+   * @function ionViewWillEnter
+   * @description Se ejecuta cuando la vista va a entrar en pantalla.
+   */
   ionViewWillEnter(): void {
     // Si ya hay sesion activa, no mostramos login otra vez y mandamos al usuario a la app.
     this.authService.getCurrentUser().then((user) => {
@@ -34,6 +39,11 @@ export class LoginPage {
     });
   }
 
+
+  /**
+   * @function setMode
+   * @description Cambia el modo de autenticación.
+   */
   setMode(mode: AuthMode): void {
     // Cambia el formulario visible y limpia mensajes para que no queden errores viejos en pantalla.
     this.mode = mode;
@@ -41,6 +51,12 @@ export class LoginPage {
     this.errorMessage = '';
   }
 
+
+  /**
+   * @function submit
+   * @description Maneja el envío del formulario de autenticación, adaptándose al modo actual. 
+   * Valida los campos necesarios y muestra mensajes de error o éxito según corresponda.
+   */
   submit(): void {
     // Punto central del formulario: segun el modo decide si ingresa, registra, confirma o recupera clave.
     if (!this.authService.isConfigured) {
@@ -82,6 +98,11 @@ export class LoginPage {
     this.errorMessage = '';
     this.message = '';
 
+
+  /**
+   * @function request
+   * @description Realiza la solicitud de autenticación correspondiente según el modo actual. 
+   */
     const request = this.mode === 'signin'
       ? this.authService.signIn(this.email.trim(), this.password)
       : this.authService.signUp({
@@ -117,6 +138,11 @@ export class LoginPage {
       });
   }
 
+
+    /**
+   * @function sendPasswordResetCode
+   * @description Inicia el proceso de recuperación de contraseña enviando un código al mail del usuario.
+   */
   sendPasswordResetCode(): void {
     // Primer paso de "olvide mi clave": se pide el codigo de recuperacion por mail.
     this.isLoading = true;
@@ -137,6 +163,11 @@ export class LoginPage {
       });
   }
 
+
+  /**
+   * @function resetPassword
+   * @description Completa el proceso de recuperación de contraseña confirmando el código recibido y estableciendo una nueva clave.
+   */
   resetPassword(): void {
     // Segundo paso de recuperacion: el usuario carga codigo y nueva clave.
     if (!this.confirmationCode.trim()) {
@@ -169,6 +200,12 @@ export class LoginPage {
       });
   }
 
+
+  /**
+   * @function confirmAccount
+   * @description Confirma la cuenta del usuario utilizando el código recibido por mail. 
+   * Si la confirmación es exitosa y se tiene la clave, también inicia sesión automáticamente.
+   */
   confirmAccount(): void {
     // Confirma la cuenta con el codigo recibido. Si tenemos la clave, tambien iniciamos sesion.
     if (!this.confirmationCode.trim()) {
@@ -206,6 +243,11 @@ export class LoginPage {
       });
   }
 
+
+  /**
+   * @function resendCode
+   * @description Permite al usuario solicitar un nuevo código de confirmación en caso de no haber recibido el original.
+   */
   resendCode(): void {
     // Boton para reenviar codigo cuando el usuario no lo encontro o tardo demasiado.
     if (!this.email.trim()) {
@@ -230,6 +272,11 @@ export class LoginPage {
       });
   }
 
+
+  /**
+   * @function signOut
+   * @description Permite al usuario cerrar sesión manualmente desde la pantalla de cuenta/login. 
+   */
   signOut(): void {
     // Cierre de sesion manual desde la pantalla de cuenta/login.
     this.authService.signOut();
@@ -239,6 +286,11 @@ export class LoginPage {
     this.router.navigateByUrl('/login');
   }
 
+
+  /**
+   * @function getErrorMessage
+   * @description Traduce errores técnicos de Cognito a mensajes claros para el usuario.
+   */
   private getErrorMessage(error: unknown): string {
     // Traduce errores tecnicos de Cognito a mensajes claros para un usuario de Argentina/Latam.
     const message = this.extractErrorMessage(error);
@@ -326,6 +378,11 @@ export class LoginPage {
     return 'No pudimos completar la operación.';
   }
 
+
+  /**
+   * @function extractErrorMessage
+   * @description Extrae un mensaje de error legible a partir de la estructura de error que devuelve Cognito.
+   */
   private extractErrorMessage(error: unknown): string {
     // Cognito puede devolver errores con formas distintas; aca los convertimos a texto para analizarlos.
     if (error instanceof Error) {
@@ -343,6 +400,11 @@ export class LoginPage {
     return String(error ?? '');
   }
 
+
+  /**
+   * @function isUserNotConfirmed
+   * @description Detecta si el error corresponde a una cuenta que aún no está confirmada.
+   */
   private isUserNotConfirmed(error: unknown): boolean {
     // Detecta el caso especial donde la cuenta existe pero todavia falta confirmar el mail.
     return this.extractErrorMessage(error).includes('UserNotConfirmedException');

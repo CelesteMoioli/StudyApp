@@ -1,13 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Agenda } from './agenda';
+import { AgendaService } from './agenda';
 
-describe('Agenda', () => {
-  let service: Agenda;
+
+  /**
+   * @function describir
+   * @description Pruebas unitarias para el servicio de Agenda. 
+   */
+describe('AgendaService', () => {
+  let service: AgendaService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Agenda);
+    service = TestBed.inject(AgendaService);
   });
 
   it('should be created', () => {

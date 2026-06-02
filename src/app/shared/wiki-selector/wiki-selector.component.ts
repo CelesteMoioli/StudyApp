@@ -24,6 +24,11 @@ export class WikiSelectorComponent {
 
   constructor(private wikipediaService: WikipediaService) {}
 
+
+  /**
+   * @function buscar
+   * @description Busca artículos en Wikipedia.
+   */
   buscar(): void {
     const term = this.searchTerm.trim();
     if (!term) return;
@@ -45,6 +50,11 @@ export class WikiSelectorComponent {
       });
   }
 
+
+  /**
+   * @function abrirArticulo
+   * @description Obtiene el artículo completo de Wikipedia.
+   */
   abrirArticulo(title: string): void {
     this.isReadingLoading = true;
     this.selectedArticle = null;
@@ -57,11 +67,21 @@ export class WikiSelectorComponent {
       });
   }
 
+
+  /**
+   * @function usarArticulo
+   * @description Emite el contenido del artículo seleccionado para que pueda ser usado en el editor.
+   */
   usarArticulo(): void {
     if (!this.selectedArticle) return;
     this.wikiSeleccionada.emit(this.selectedArticle.html);
   }
 
+
+  /**
+   * @function volver
+   * @description Vuelve a la vista de resultados de búsqueda.
+   */
   volver(): void {
     this.selectedArticle = null;
   }

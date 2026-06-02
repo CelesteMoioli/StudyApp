@@ -37,7 +37,11 @@ export class AgendaService {
 
   private db = getFirestore();
 
-  // Crear un evento nuevo
+
+  /**
+   * @function crearEvento
+   * @description Crea un nuevo evento en la base de datos.
+   */
   async crearEvento(evento: Omit<Evento, 'id'>): Promise<string> {
     const eventosRef = collection(this.db, 'eventos');
     const docRef = await addDoc(eventosRef, {
@@ -47,7 +51,10 @@ export class AgendaService {
     return docRef.id;
   }
 
-  // Traer todos los eventos donde el usuario es creador o invitado
+  /**
+   * @function obtenerEventos
+   * @description Obtiene todos los eventos donde el usuario es creador.
+   */
   async obtenerEventos(emailUsuario: string): Promise<Evento[]> {
     const eventosRef = collection(this.db, 'eventos');
 
@@ -68,7 +75,10 @@ export class AgendaService {
     return eventosCreados;
   }
 
-  // Traer eventos donde fui invitado
+  /**
+   * @function obtenerInvitaciones
+   * @description Obtiene todas las invitaciones pendientes para un usuario.
+   */
   async obtenerInvitaciones(emailUsuario: string): Promise<Evento[]> {
     const eventosRef = collection(this.db, 'eventos');
     const campo = `invitados.${emailUsuario.replace('.', '_')}`;
@@ -86,7 +96,10 @@ export class AgendaService {
     } as Evento));
   }
 
-  // Responder una invitacion (aceptar o rechazar)
+  /**
+   * @function responderInvitacion
+   * @description Responde a una invitación (aceptar o rechazar).
+   */
   async responderInvitacion(
     eventoId: string,
     emailUsuario: string,

@@ -26,11 +26,21 @@ export class AuthService {
   private cognitoLibrary?: Promise<CognitoLibrary>;
   private userPool?: CognitoUserPoolInstance;
 
+
+  /**
+   * @function isConfigured
+   * @description Verifica si el servicio de autenticación está configurado correctamente.
+   */
   get isConfigured(): boolean {
     // Validamos que el User Pool tenga formato real antes de intentar loguear al usuario.
     return /^[a-z]{2}-[a-z]+-\d_[A-Za-z0-9]+$/.test(this.poolData.userPoolId) && Boolean(this.poolData.clientId);
   }
 
+
+  /**
+   * @function signIn
+   * @description Inicia sesión con las credenciales proporcionadas.
+   */
   async signIn(email: string, password: string): Promise<AuthenticatedUser> {
     // Login principal: Cognito revisa mail y clave, y si esta todo bien devuelve los tokens.
     const cognito = await this.loadCognito();
@@ -48,6 +58,11 @@ export class AuthService {
     });
   }
 
+
+  /**
+   * @function signUp
+   * @description Registra un nuevo usuario con los datos proporcionados. 
+   */
   async signUp(data: RegisterUserData): Promise<void> {
     // Registro de usuario nuevo. Mandamos mail y nombre como atributos para que Cognito cree la cuenta.
     const cognito = await this.loadCognito();
@@ -69,6 +84,11 @@ export class AuthService {
     });
   }
 
+
+  /**
+   * @function confirmSignUp
+   * @description Confirma el registro de un usuario con el código recibido por correo electrónico.
+   */
   async confirmSignUp(email: string, code: string): Promise<void> {
     // Confirmacion del codigo que llega por mail despues del registro.
     const user = await this.createUser(email);
@@ -85,6 +105,11 @@ export class AuthService {
     });
   }
 
+
+  /**
+   * @function resendConfirmationCode
+   * @description Reenvía el código de confirmación a un usuario que no recibió o perdió el código original.
+   */
   async resendConfirmationCode(email: string): Promise<void> {
     // Si el usuario perdio o vencio el codigo, pedimos a Cognito que mande uno nuevo.
     const user = await this.createUser(email);
@@ -101,6 +126,11 @@ export class AuthService {
     });
   }
 
+
+  /**
+   * @function forgotPassword
+   * @description Inicia el proceso de recuperación de contraseña.
+   */
   async forgotPassword(email: string): Promise<void> {
     // Inicio de recuperacion de clave: Cognito envia un codigo al mail del usuario.
     const user = await this.createUser(email);
@@ -114,6 +144,11 @@ export class AuthService {
     });
   }
 
+
+  /**
+   * @function confirmNewPassword
+   * @description Confirma la nueva contraseña para un usuario.
+   */
   async confirmNewPassword(email: string, code: string, newPassword: string): Promise<void> {
     // Cierre de recuperacion: con el codigo recibido se define una clave nueva.
     const user = await this.createUser(email);
@@ -126,12 +161,22 @@ export class AuthService {
     });
   }
 
+
+  /**
+   * @function signOut
+   * @description Cierra la sesión del usuario actual.
+   */
   async signOut(): Promise<void> {
     // Cierra la sesion guardada por Cognito en el navegador/dispositivo.
     const userPool = await this.getUserPool();
     userPool.getCurrentUser()?.signOut();
   }
 
+
+  /**
+   * @function getCurrentUser
+   * @description Obtiene la información del usuario autenticado.
+   */
   async getCurrentUser(): Promise<AuthenticatedUser | null> {
     // Revisa si ya existe una sesion valida. Esto nos permite proteger la app al abrirla.
     const userPool = await this.getUserPool();
@@ -153,6 +198,11 @@ export class AuthService {
     });
   }
 
+
+  /**
+   * @function createUser
+   * @description Crea una instancia de usuario de Cognito.
+   */
   private async createUser(email: string) {
     // Cognito trabaja con objetos usuario; esta funcion evita repetir la misma creacion en cada operacion.
     const cognito = await this.loadCognito();
@@ -164,6 +214,11 @@ export class AuthService {
     });
   }
 
+
+  /**
+   * @function getUserPool
+   * @description Obtiene la instancia del User Pool de Cognito.
+   */
   private async getUserPool(): Promise<CognitoUserPoolInstance> {
     // Creamos el User Pool una sola vez y lo reutilizamos para login, registro y recuperacion.
     if (this.userPool) {
@@ -179,12 +234,22 @@ export class AuthService {
     return this.userPool;
   }
 
+
+  /**
+   * @function loadCognito
+   * @description Carga la librería de Cognito de forma dinámica para evitar problemas de inicialización en Angular
+   */
   private loadCognito(): Promise<CognitoLibrary> {
     // Import dinamico para que Angular no cargue Cognito antes de tiempo y evitar errores de inicializacion.
     this.cognitoLibrary ??= import('amazon-cognito-identity-js');
     return this.cognitoLibrary;
   }
 
+
+  /**
+   * @function mapSession
+   * @description Mapea la sesión de Cognito a un objeto de usuario autenticado.
+   */
   private mapSession(email: string, session: CognitoUserSessionInstance): AuthenticatedUser {
     // Dejamos la sesion en un formato simple para que el resto de la app no dependa directo de Cognito.
     return {

@@ -27,10 +27,20 @@ import { WikiSelectorComponent } from './wiki-selector.component';
 export class WikiSelectorModalComponent {
   constructor(private modalController: ModalController) {}
 
+  
+  /**
+   * @function seleccionar
+   * @description Selecciona el artículo de Wikipedia y cierra el modal.
+   */
   seleccionar(html: string): void {
     this.modalController.dismiss({ wikiHtml: html });
   }
 
+
+  /**
+   * @function cerrar
+   * @description Cierra el modal sin seleccionar ningún artículo.
+   */
   cerrar(): void {
     this.modalController.dismiss();
   }

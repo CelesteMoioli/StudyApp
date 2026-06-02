@@ -32,6 +32,11 @@ export class WikipediaService {
 
   constructor(private http: HttpClient) {}
 
+
+  /**
+   * @function search
+   * @description Busca artículos en Wikipedia.
+   */
   search(term: string): Observable<WikipediaSearchResult[]> {
     // Busqueda corta para armar el listado de temas. Usamos Wikipedia en espanol como API publica.
     const params = new HttpParams()
@@ -57,6 +62,11 @@ export class WikipediaService {
     );
   }
 
+
+  /**
+   * @function getArticle
+   * @description Obtiene el artículo completo de Wikipedia.
+   */
   getArticle(title: string): Observable<WikipediaArticle> {
     // Traemos el articulo completo en HTML para leerlo dentro de StudyApp, sin abrir otra app o navegador.
     const params = new HttpParams()
@@ -81,6 +91,11 @@ export class WikipediaService {
     );
   }
 
+
+  /**
+   * @function normalizeArticleHtml
+   * @description Normaliza el HTML del artículo para que se muestre correctamente en la app.
+   */
   private normalizeArticleHtml(html: string): string {
     // Wikipedia devuelve enlaces e imagenes con rutas relativas; aca las dejamos listas para Ionic.
     return html

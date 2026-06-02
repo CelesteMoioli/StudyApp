@@ -35,6 +35,12 @@ export class SalaDetallePage implements OnInit, OnDestroy {
     private modalController: ModalController
   ) {}
 
+
+  /**
+   * @function ngOnInit
+   * @description Se ejecuta al inicializar el componente. 
+   * Obtiene el ID y nombre de la sala desde la ruta, recupera el usuario actual, se une a la sala y se suscribe a los cambios en presencia, chat y documentos.
+   */
   async ngOnInit(): Promise<void> {
     this.salaId = this.route.snapshot.paramMap.get('id') ?? '';
     this.salaNombre = this.route.snapshot.paramMap.get('nombre') ?? '';
@@ -53,6 +59,12 @@ export class SalaDetallePage implements OnInit, OnDestroy {
     });
   }
 
+
+  /**
+   * @function ngOnDestroy
+   * @description Se ejecuta al destruir el componente. 
+   * Deja la sala, cancela las suscripciones a presencia, chat y documentos para evitar fugas de memoria.
+   */
   ngOnDestroy(): void {
     this.db.leaveSala(this.salaId, this.userEmail);
     this.chatSub?.unsubscribe();
@@ -60,6 +72,11 @@ export class SalaDetallePage implements OnInit, OnDestroy {
     this.docSub?.unsubscribe();
   }
 
+
+  /**
+   * @function enviar
+   * @description Envía un mensaje a la sala.
+   */
   enviar(): void {
     const texto = this.nuevoMensaje.trim();
     if (!texto) return;
@@ -71,18 +88,38 @@ export class SalaDetallePage implements OnInit, OnDestroy {
     this.nuevoMensaje = '';
   }
 
+
+  /**
+   * @function esMio
+   * @description Determina si un mensaje pertenece al usuario actual.
+   */
   esMio(msg: any): boolean {
     return msg.email === this.userEmail;
   }
 
+
+  /**
+   * @function nuevoDocumento
+   * @description Abre el editor de documentos para crear un nuevo documento en la sala. 
+   */
   async nuevoDocumento(): Promise<void> {
     await this.abrirEditor(null);
   }
 
+
+  /**
+   * @function abrirDocumento
+   * @description Abre el editor de documentos para ver o editar un documento existente en la sala.
+   */
   async abrirDocumento(doc: any): Promise<void> {
     await this.abrirEditor(doc);
   }
 
+
+  /**
+   * @function abrirEditor
+   * @description Abre un modal con el componente DocumentoEditorComponent para crear o editar un documento.
+   */
   private async abrirEditor(documento: any): Promise<void> {
     const modal = await this.modalController.create({
       component: DocumentoEditorComponent,
@@ -105,6 +142,11 @@ export class SalaDetallePage implements OnInit, OnDestroy {
     await modal.present();
   }
 
+
+  /**
+   * @function abrirEditorConWiki
+   * @description Abre el editor de documentos con contenido de wiki pre-cargado. 
+   */
   private async abrirEditorConWiki(documento: any, titulo: string, contenidoActual: string, wikiHtml: string): Promise<void> {
     const modal = await this.modalController.create({
       component: DocumentoEditorComponent,
@@ -130,6 +172,11 @@ export class SalaDetallePage implements OnInit, OnDestroy {
     await modal.present();
   }
 
+
+  /**
+   * @function abrirWikiModal
+   * @description Abre un modal para seleccionar una página de wiki.
+   */
   private async abrirWikiModal(): Promise<string | null> {
     const modal = await this.modalController.create({
       component: WikiSelectorModalComponent

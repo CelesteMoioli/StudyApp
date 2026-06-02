@@ -29,12 +29,22 @@ export class DocumentoEditorComponent implements OnInit, OnDestroy, AfterViewIni
 
   constructor(private modalController: ModalController, private db: DbService) {}
 
+
+  /**
+   * @function ngOnInit
+   * @description Inicializa el componente.
+   */
   ngOnInit(): void {
     if (this.documento) {
       this.titulo = this.documento.titulo;
     }
   }
 
+
+  /**
+   * @function ngAfterViewInit
+   * @description Carga el contenido del documento en el editor. 
+   */
   ngAfterViewInit(): void {
     const editor = this.editorRef?.nativeElement;
     if (!editor) return;
@@ -70,22 +80,42 @@ export class DocumentoEditorComponent implements OnInit, OnDestroy, AfterViewIni
     }
   }
 
+
+  /**
+   * @function ngOnDestroy
+   * @description Limpia los recursos al destruir el componente.
+   */
   ngOnDestroy(): void {
     clearTimeout(this.autoSaveTimer);
     this.docSub?.unsubscribe();
   }
 
+
+  /**
+   * @function cmd
+   * @description Ejecuta un comando de edición en el documento y mantiene el foco en el editor.
+   */
   cmd(command: string): void {
     document.execCommand(command, false);
     this.editorRef?.nativeElement.focus();
   }
 
+
+  /**
+   * @function aplicarBloque
+   * @description Aplica un formato de bloque al texto seleccionado en el editor.
+   */
   aplicarBloque(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     document.execCommand('formatBlock', false, value);
     this.editorRef?.nativeElement.focus();
   }
 
+
+  /**
+   * @function aplicarTamano
+   * @description Aplica un tamaño de fuente al texto seleccionado en el editor.
+   */
   aplicarTamano(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     const sel = window.getSelection();
@@ -97,6 +127,11 @@ export class DocumentoEditorComponent implements OnInit, OnDestroy, AfterViewIni
     this.onCambio();
   }
 
+
+  /**
+   * @function aplicarColor
+   * @description Aplica un color de texto al texto seleccionado en el editor.
+   */
   aplicarColor(event: Event): void {
     const color = (event.target as HTMLInputElement).value;
     document.execCommand('foreColor', false, color);
@@ -104,8 +139,18 @@ export class DocumentoEditorComponent implements OnInit, OnDestroy, AfterViewIni
     this.onCambio();
   }
 
+
+  /**
+   * @function onkeydown
+   * @description Maneja eventos de teclado para atajos de formato.
+   */
   onKeydown(event: KeyboardEvent): void {}
 
+
+  /**
+   * @function onCambio
+   * @description Maneja cambios en el contenido del editor y guarda automáticamente.
+   */
   onCambio(): void {
     if (!this.documento) return;
     clearTimeout(this.autoSaveTimer);
@@ -115,6 +160,11 @@ export class DocumentoEditorComponent implements OnInit, OnDestroy, AfterViewIni
     }, 1000);
   }
 
+
+  /**
+   * @function guardar
+   * @description Guarda los cambios en el documento.
+   */
   async guardar(): Promise<void> {
     const contenido = this.editorRef?.nativeElement.innerHTML ?? '';
     if (this.documento) {
@@ -131,15 +181,30 @@ export class DocumentoEditorComponent implements OnInit, OnDestroy, AfterViewIni
     }
   }
 
+
+  /**
+   * @function insertarWiki
+   * @description Inserta un enlace a la wiki en el documento.
+   */
   insertarWiki(): void {
     const contenido = this.editorRef?.nativeElement.innerHTML ?? '';
     this.modalController.dismiss({ abrirWiki: true, contenidoActual: contenido, titulo: this.titulo });
   }
 
+
+  /**
+   * @function insertarImagen
+   * @description Inserta una imagen en el documento.
+   */
   insertarImagen(): void {
     this.fileInputRef?.nativeElement.click();
   }
 
+
+  /**
+   * @function onImagenSeleccionada
+   * @description Maneja la selección de una imagen y la inserta en el editor.
+   */
   onImagenSeleccionada(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
@@ -153,6 +218,11 @@ export class DocumentoEditorComponent implements OnInit, OnDestroy, AfterViewIni
     reader.readAsDataURL(file);
   }
 
+
+  /**
+   * @function insertarHtmlEnCursor
+   * @description Inserta HTML en la posición del cursor.
+   */
   private insertarHtmlEnCursor(html: string): void {
     const editor = this.editorRef?.nativeElement;
     if (!editor) return;
@@ -169,6 +239,11 @@ export class DocumentoEditorComponent implements OnInit, OnDestroy, AfterViewIni
     }
   }
 
+
+  /**
+   * @function cerrar
+   * @description Cierra el modal del editor de documentos.
+   */
   cerrar(): void {
     this.modalController.dismiss();
   }
