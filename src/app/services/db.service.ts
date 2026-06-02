@@ -142,4 +142,30 @@ export class DbService {
       for (const recurso of recursos) push(ref(this.db, 'recursos'), recurso);
     }
   }
+// ── Documentos colaborativos ──────────────────────────────────────────────
+
+listenDocumentos(salaId: string): Observable<any[]> {
+  return new Observable(obs => {
+    onValue(ref(this.db, `documentos/${salaId}`), snap => {
+      const val = snap.val() ?? {};
+      obs.next(Object.entries(val).map(([id, data]) => ({ id, ...(data as object) })));
+    });
+  });
+}
+
+crearDocumento(salaId: string, doc: { titulo: string; contenido: string; autor: string }): void {
+  push(ref(this.db, `documentos/${salaId}`), {
+    ...doc,
+    fechaCreacion: Date.now(),
+    ultimaEdicion: Date.now()
+  });
+}
+
+actualizarDocumento(salaId: string, docId: string, contenido: string): Promise<void> {
+  return set(ref(this.db, `documentos/${salaId}/${docId}`), {
+    contenido,
+    ultimaEdicion: Date.now()
+  });
+}
+
 }
