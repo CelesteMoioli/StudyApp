@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Database, ref, push, get, set, onValue, remove } from '@angular/fire/database';
+import { Database, ref, push, get, set, update, onValue, remove } from '@angular/fire/database';
 import { onDisconnect } from 'firebase/database';
 import { Observable } from 'rxjs';
 
@@ -8,7 +8,6 @@ export class DbService {
   private db = inject(Database);
 
   private userKey(email: string): string {
-    // Firebase no permite puntos en las keys, los reemplazamos por comas
     return email.replace(/\./g, ',');
   }
 
@@ -142,30 +141,30 @@ export class DbService {
       for (const recurso of recursos) push(ref(this.db, 'recursos'), recurso);
     }
   }
-// ── Documentos colaborativos ──────────────────────────────────────────────
 
-listenDocumentos(salaId: string): Observable<any[]> {
-  return new Observable(obs => {
-    onValue(ref(this.db, `documentos/${salaId}`), snap => {
-      const val = snap.val() ?? {};
-      obs.next(Object.entries(val).map(([id, data]) => ({ id, ...(data as object) })));
+  // ── Documentos colaborativos ──────────────────────────────────────────────
+
+  listenDocumentos(salaId: string): Observable<any[]> {
+    return new Observable(obs => {
+      onValue(ref(this.db, `documentos/${salaId}`), snap => {
+        const val = snap.val() ?? {};
+        obs.next(Object.entries(val).map(([id, data]) => ({ id, ...(data as object) })));
+      });
     });
-  });
-}
+  }
 
-crearDocumento(salaId: string, doc: { titulo: string; contenido: string; autor: string }): void {
-  push(ref(this.db, `documentos/${salaId}`), {
-    ...doc,
-    fechaCreacion: Date.now(),
-    ultimaEdicion: Date.now()
-  });
-}
+  crearDocumento(salaId: string, doc: { titulo: string; contenido: string; autor: string }): void {
+    push(ref(this.db, `documentos/${salaId}`), {
+      ...doc,
+      fechaCreacion: Date.now(),
+      ultimaEdicion: Date.now()
+    });
+  }
 
-actualizarDocumento(salaId: string, docId: string, contenido: string): Promise<void> {
-  return set(ref(this.db, `documentos/${salaId}/${docId}`), {
-    contenido,
-    ultimaEdicion: Date.now()
-  });
-}
-
+  actualizarDocumento(salaId: string, docId: string, contenido: string): Promise<void> {
+    return update(ref(this.db, `documentos/${salaId}/${docId}`), {
+      contenido,
+      ultimaEdicion: Date.now()
+    });
+  }
 }
